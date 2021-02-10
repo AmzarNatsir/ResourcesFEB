@@ -58,4 +58,28 @@ class Model_career extends CI_Model {
         $this->db->where("id", $id);
         $this->db->delete("cc_mst_kategori_kegiatan");
     }
+    //kategori informasi
+    function get_all_kategori_informasi()
+	{
+		return $this->db->get("cc_mst_kategori_informasi")->result_array();
+	}
+    function insert_data_kategori_informasi($data)
+    {
+        $this->db->insert("cc_mst_kategori_informasi", $data);
+
+    }
+    function get_profil_kategori_informasi($id)
+    {
+        return $this->db->where("id", $id)->get("cc_mst_kategori_informasi")->row();
+    }
+    function update_data_kategori_informasi($id, $data)
+    {
+        $this->db->where("id", $id);
+        $this->db->update("cc_mst_kategori_informasi", $data);
+    }
+    function delete_data_kategori_informasi($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("cc_mst_kategori_informasi");
+    }
 }

@@ -447,4 +447,43 @@ class Opsi extends CI_Controller
 		$this->model_career->delete_data_kategori_kegiatan($id_tabel);
 		echo "Data berhasil di hapus";
 	}
+	//Opsi Career kategori Informasi
+	public function kategori_informasi_career()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_data'] = $this->model_career->get_all_kategori_informasi();
+		$this->load->view("opsi/career/kategori_informasi/index", $data);
+	}
+	public function kategori_informasi_career_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['nama_kategori'] = $this->input->post("nm_kategori");
+		$this->model_career->insert_data_kategori_informasi($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/kategori_informasi_career");
+	}
+	public function kategori_informasi_career_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$data['res'] = $this->model_career->get_profil_kategori_informasi($id_tabel);
+		$this->load->view("opsi/career/kategori_informasi/edit", $data);
+	}
+	public function kategori_informasi_career_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['nama_kategori'] = $this->input->post("nm_kategori");
+		$this->model_career->update_data_kategori_informasi($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/kategori_informasi_career");
+	}
+	public function kategori_informasi_career_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_kategori_informasi($id_tabel);
+		echo "Data berhasil di hapus";
+	}
 }
