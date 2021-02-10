@@ -17,34 +17,6 @@
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit text-red"></i><span>OPSI</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url();?>opsi/kategori_berita"><i class="fa fa-edit"></i> Kategori Berita</a></li>
-            <li><a href="<?php echo base_url();?>opsi/kategori_faq"><i class="fa fa-edit"></i> Kategori FAQ</a></li>
-            <li><a href="<?php echo base_url();?>opsi/kategori_id"><i class="fa fa-edit"></i> Kategori ID Resources</a></li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-edit"></i>
-                <span>RPS</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="<?php echo base_url();?>opsi/aspek_sikap"><i class="fa fa-circle-o"></i> Aspek Sikap</a></li>
-                <li><a href="<?php echo base_url();?>opsi/aspek_pengetahuan"><i class="fa fa-circle-o"></i> Aspek Pengetahuan</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_umum"><i class="fa fa-circle-o"></i> Aspek Keterampilan Umum</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Aspek Keterampilan Khusus</a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
             <i class="fa fa-book text-red"></i>
             <span>AKADEMIK</span>
             <span class="pull-right-container">
@@ -71,6 +43,21 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-edit"></i>
+                <span>OPSI</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url();?>opsi/aspek_sikap"><i class="fa fa-circle-o"></i> Aspek Sikap</a></li>
+                <li><a href="<?php echo base_url();?>opsi/aspek_pengetahuan"><i class="fa fa-circle-o"></i> Aspek Pengetahuan</a></li>
+                <li><a href="<?php echo base_url();?>opsi/keterampilan_umum"><i class="fa fa-circle-o"></i> Aspek Keterampilan Umum</a></li>
+                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Aspek Keterampilan Khusus</a></li>
+              </ul>
+            </li>
             <li class="active"><a href="<?php echo base_url();?>rps/guidelines"><i class="fa fa-book"></i> Guidelines</a></li>
             <li><a href="<?php echo base_url();?>rps/team_teaching"><i class="fa fa-lock"></i> Team Teaching RPS</a></li>
             <li><a href="<?php echo base_url();?>rps"><i class="fa fa-edit"></i> Penyusunan RPS</a></li>
@@ -85,6 +72,20 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-edit"></i>
+                <span>OPSI</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url();?>opsi/kategori_berita"><i class="fa fa-edit"></i> Kategori Berita</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_faq"><i class="fa fa-edit"></i> Kategori FAQ</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_id"><i class="fa fa-edit"></i> Kategori ID Resources</a></li>
+              </ul>
+            </li>
             <li><a href="<?php echo base_url();?>slide"><i class="fa fa-image"></i> Slides</a></li>
             <li><a href="<?php echo base_url();?>berita"><i class="fa fa-info"></i> Berita</a></li>
             <li><a href="<?php echo base_url();?>mitra"><i class="fa fa-info"></i> Mitra</a></li>
