@@ -9,7 +9,7 @@ class Opsi extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('Model_opsi_sikap', 'Model_opsi_pengetahuan', 'Model_opsi_keterampilan_umum', 'Model_opsi_keterampilan_khusus', 'Model_opsi_kat_faq', 'Model_opsi_kat_berita', 'Model_opsi_kategori_id'));
+		$this->load->model(array('Model_opsi_sikap', 'Model_opsi_pengetahuan', 'Model_opsi_keterampilan_umum', 'Model_opsi_keterampilan_khusus', 'Model_opsi_kat_faq', 'Model_opsi_kat_berita', 'Model_opsi_kategori_id', 'model_career'));
 		date_default_timezone_set("Asia/Makassar");
 	}
 	private $_path_opsi_sikap = "opsi/aspek_sikap/";
@@ -368,5 +368,44 @@ class Opsi extends CI_Controller
 	        $data = array('upload_data' => $this->upload->data());
 	       	return $filename.$data['upload_data']['file_ext'];
 	    }
+	}
+	//Opsi Career
+	public function kategori_loker()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_data'] = $this->model_career->get_all_kategori_loker();
+		$this->load->view("opsi/career/kategori_loker/index", $data);
+	}
+	public function kategori_loker_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['nama_kategori'] = $this->input->post("nm_kategori");
+		$this->model_career->insert_data_kategori_loker($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/kategori_loker");
+	}
+	public function kategori_loker_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$data['res'] = $this->model_career->get_profil_kategori_loker($id_tabel);
+		$this->load->view("opsi/career/kategori_loker/edit", $data);
+	}
+	public function kategori_loker_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['nama_kategori'] = $this->input->post("nm_kategori");
+		$this->model_career->update_data_kategori_loker($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/kategori_loker");
+	}
+	public function kategori_loker_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_kategori_loker($id_tabel);
+		echo "Data berhasil di hapus";
 	}
 }

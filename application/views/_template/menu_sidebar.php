@@ -111,13 +111,13 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?php echo base_url();?>opsi/aspek_sikap"><i class="fa fa-circle-o"></i> Kategori Loker</a></li>
-                <li><a href="<?php echo base_url();?>opsi/aspek_pengetahuan"><i class="fa fa-circle-o"></i> Kategori Kegiatan</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_umum"><i class="fa fa-circle-o"></i> Kategori Informasi</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Provinsi</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Kabupaten/Kota</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Kecamatan</a></li>
-                <li><a href="<?php echo base_url();?>opsi/keterampilan_khusus"><i class="fa fa-circle-o"></i> Kelurahan</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_loker"><i class="fa fa-circle-o"></i> Kategori Loker</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_kegiatan"><i class="fa fa-circle-o"></i> Kategori Kegiatan</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_informasi"><i class="fa fa-circle-o"></i> Kategori Informasi</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_provinsi"><i class="fa fa-circle-o"></i> Provinsi</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_kabupaten"><i class="fa fa-circle-o"></i> Kabupaten/Kota</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_kecamatan"><i class="fa fa-circle-o"></i> Kecamatan</a></li>
+                <li><a href="<?php echo base_url();?>opsi/kategori_kelurahan"><i class="fa fa-circle-o"></i> Kelurahan</a></li>
               </ul>
             </li>
           </ul>
