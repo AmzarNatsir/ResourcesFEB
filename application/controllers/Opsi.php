@@ -486,4 +486,152 @@ class Opsi extends CI_Controller
 		$this->model_career->delete_data_kategori_informasi($id_tabel);
 		echo "Data berhasil di hapus";
 	}
+	//Opsi Provinsi
+	public function provinsi()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_data'] = $this->model_career->get_all_provinsi();
+		$this->load->view("opsi/career/provinsi/index", $data);
+	}
+	public function provinsi_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['nama_provinsi'] = $this->input->post("nm_provinsi");
+		$this->model_career->insert_data_provinsi($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/provinsi");
+	}
+	public function provinsi_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$data['res'] = $this->model_career->get_profil_provinsi($id_tabel);
+		$this->load->view("opsi/career/provinsi/edit", $data);
+	}
+	public function provinsi_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['nama_provinsi'] = $this->input->post("nm_provinsi");
+		$this->model_career->update_data_provinsi($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/provinsi");
+	}
+	public function provinsi_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_provinsi($id_tabel);
+		echo "Data berhasil di hapus";
+	}
+	//Opsi Kabupaten
+	public function kabupaten()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_provinsi'] = $this->model_career->get_all_provinsi();
+		$this->load->view("opsi/career/kabupaten/index", $data);
+	}
+	public function kabupaten_add()
+	{
+		$this->Model_security->get_security();
+		$id_provinsi = $this->uri->segment(3);
+		$data['res_provinsi'] = $this->model_career->get_profil_provinsi($id_provinsi);
+		$this->load->view("opsi/career/kabupaten/add", $data);
+	}
+	public function kabupaten_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['id_provinsi'] = $this->input->post("id_provinsi");
+		$data['nama_kabupaten'] = $this->input->post("nm_kabupaten");
+		$this->model_career->insert_data_kabupaten($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/kabupaten");
+	}
+	public function kabupaten_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$data['res'] = $this->model_career->get_profil_kabupaten($id_tabel);
+		$data['res_provinsi'] = $this->model_career->get_all_provinsi();
+		$this->load->view("opsi/career/kabupaten/edit", $data);
+	}
+	public function kabupaten_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['id_provinsi'] = $this->input->post("nm_provinsi");
+		$data['nama_kabupaten'] = $this->input->post("nm_kabupaten");
+		$this->model_career->update_data_kabupaten($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/kabupaten");
+	}
+	public function kabupaten_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_kabupaten($id_tabel);
+		echo "Data berhasil di hapus";
+	}
+	public function filter_kabupaten()
+	{
+		//$this->Model_security->get_security();
+		$id_provinsi = $this->uri->segment(3);
+		$data['res_kabupaten'] = $this->model_career->get_all_kabupaten($id_provinsi);
+		$this->load->view("opsi/career/kecamatan/filter_kabupaten", $data);
+	}
+	//Kecamatan
+	public function kecamatan()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_provinsi'] = $this->model_career->get_all_provinsi();
+		$this->load->view("opsi/career/kecamatan/index", $data);
+	}
+	public function kecamatan_add()
+	{
+		$this->Model_security->get_security();
+		$id_kabupaten = $this->uri->segment(3);
+		$data['res_kabupaten'] = $this->model_career->get_profil_kabupaten($id_kabupaten);
+		$this->load->view("opsi/career/kecamatan/add", $data);
+	}
+	public function kecamatan_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['id_provinsi'] = $this->input->post("id_provinsi");
+		$data['id_kabupaten'] = $this->input->post("id_kabupaten");
+		$data['nama_kecamatan'] = $this->input->post("nm_kecamatan");
+		$this->model_career->insert_data_kecamatan($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/kecamatan");
+	}
+	public function kecamatan_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$id_provinsi= $this->model_career->get_profil_kecamatan($id_tabel)->id_provinsi;
+		$data['res'] = $this->model_career->get_profil_kecamatan($id_tabel);
+		$data['res_provinsi'] = $this->model_career->get_all_provinsi();
+		$data['res_kabupaten'] = $this->model_career->get_all_kabupaten($id_provinsi);
+		$this->load->view("opsi/career/kecamatan/edit", $data);
+	}
+	public function kecamatan_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['id_provinsi'] = $this->input->post("nm_provinsi");
+		$data['id_kabupaten'] = $this->input->post("nm_kabupaten");
+		$data['nama_kecamatan'] = $this->input->post("nm_kecamatan");
+		$this->model_career->update_data_kecamatan($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/kecamatan");
+	}
+	public function kecamatan_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_kecamatan($id_tabel);
+		echo "Data berhasil di hapus";
+	}
 }

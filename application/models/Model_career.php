@@ -82,4 +82,84 @@ class Model_career extends CI_Model {
         $this->db->where("id", $id);
         $this->db->delete("cc_mst_kategori_informasi");
     }
+    //Provinsi
+    function get_all_provinsi()
+	{
+		return $this->db->get("mst_provinsi")->result_array();
+	}
+    function insert_data_provinsi($data)
+    {
+        $this->db->insert("mst_provinsi", $data);
+
+    }
+    function get_profil_provinsi($id)
+    {
+        return $this->db->where("id", $id)->get("mst_provinsi")->row();
+    }
+    function update_data_provinsi($id, $data)
+    {
+        $this->db->where("id", $id);
+        $this->db->update("mst_provinsi", $data);
+    }
+    function delete_data_provinsi($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("mst_provinsi");
+    }
+    //kabupaten
+    function get_all_kabupaten($id_provinsi)
+	{
+		return $this->db->where("id_provinsi", $id_provinsi)->get("mst_kabupaten")->result_array();
+	}
+    function insert_data_kabupaten($data)
+    {
+        $this->db->insert("mst_kabupaten", $data);
+    }
+    function get_profil_kabupaten($id)
+    {
+        $this->db->select("a.*, b.nama_provinsi");
+        $this->db->from("mst_kabupaten a");
+        $this->db->from("mst_provinsi b");
+        $this->db->where("a.id_provinsi = b.id");
+        return $this->db->where("a.id", $id)->get()->row();
+    }
+    function update_data_kabupaten($id, $data)
+    {
+        $this->db->where("id", $id);
+        $this->db->update("mst_kabupaten", $data);
+    }
+    function delete_data_kabupaten($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("mst_kabupaten");
+    }
+    //Kecamatan
+    function get_all_kecamatan($id_kabupaten)
+	{
+		return $this->db->where("id_kabupaten", $id_kabupaten)->get("mst_kecamatan")->result_array();
+	}
+    function insert_data_kecamatan($data)
+    {
+        $this->db->insert("mst_kecamatan", $data);
+    }
+    function get_profil_kecamatan($id)
+    {
+        $this->db->select("a.*, b.nama_kabupaten, c.nama_provinsi");
+        $this->db->from("mst_kecamatan a");
+        $this->db->from("mst_kabupaten b");
+        $this->db->from("mst_provinsi c");
+        $this->db->where("a.id_kabupaten = b.id");
+        $this->db->where("a.id_provinsi = c.id");
+        return $this->db->where("a.id", $id)->get()->row();
+    }
+    function update_data_kecamatan($id, $data)
+    {
+        $this->db->where("id", $id);
+        $this->db->update("mst_kecamatan", $data);
+    }
+    function delete_data_kecamatan($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("mst_kecamatan");
+    }
 }
