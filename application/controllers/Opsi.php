@@ -634,4 +634,68 @@ class Opsi extends CI_Controller
 		$this->model_career->delete_data_kecamatan($id_tabel);
 		echo "Data berhasil di hapus";
 	}
+	public function filter_kecamatan()
+	{
+		//$this->Model_security->get_security();
+		$id_kabupaten = $this->uri->segment(3);
+		$data['res_kecamatan'] = $this->model_career->get_all_kecamatan($id_kabupaten);
+		$this->load->view("opsi/career/kelurahan/filter_kecamatan", $data);
+	}
+	//Kelurahan
+	public function kelurahan()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_provinsi'] = $this->model_career->get_all_provinsi();
+		$this->load->view("opsi/career/kelurahan/index", $data);
+	}
+	public function kelurahan_add()
+	{
+		$this->Model_security->get_security();
+		$id_kecamatan = $this->uri->segment(3);
+		$data['res_kecamatan'] = $this->model_career->get_profil_kecamatan($id_kecamatan);
+		$this->load->view("opsi/career/kelurahan/add", $data);
+	}
+	public function kelurahan_simpan()
+	{
+		$this->Model_security->get_security();
+		$data['id_provinsi'] = $this->input->post("id_provinsi");
+		$data['id_kabupaten'] = $this->input->post("id_kabupaten");
+		$data['id_kecamatan'] = $this->input->post("id_kecamatan");
+		$data['nama_kelurahan'] = $this->input->post("nm_kelurahan");
+		$this->model_career->insert_data_kalurahan($data);
+		$this->session->set_flashdata("konfirm", "Data berhasil disimpan");
+		redirect("opsi/kelurahan");
+	}
+	public function kelurahan_edit()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->uri->segment(3);
+		$id_provinsi= $this->model_career->get_profil_kelurahan($id_tabel)->id_provinsi;
+		$id_kabupaten= $this->model_career->get_profil_kelurahan($id_tabel)->id_kabupaten;
+		$data['res'] = $this->model_career->get_profil_kelurahan($id_tabel);
+		$data['res_provinsi'] = $this->model_career->get_all_provinsi();
+		$data['res_kabupaten'] = $this->model_career->get_all_kabupaten($id_provinsi);
+		$data['res_kecamatan'] = $this->model_career->get_all_kecamatan($id_kabupaten);
+		$this->load->view("opsi/career/kelurahan/edit", $data);
+	}
+	public function kelurahan_rubah()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_tabel');
+		$data['id_provinsi'] = $this->input->post("nm_provinsi");
+		$data['id_kabupaten'] = $this->input->post("nm_kabupaten");
+		$data['id_kecamatan'] = $this->input->post("nm_kecamatan");
+		$data['nama_kelurahan'] = $this->input->post("nm_kelurahan");
+		$this->model_career->update_data_kelurahan($id_tabel, $data);
+		$this->session->set_flashdata("konfirm", "Perubahan data berhasil disimpan");
+		redirect("opsi/kelurahan");
+	}
+	public function kelurahan_hapus()
+	{
+		$this->Model_security->get_security();
+		$id_tabel = $this->input->post('id_data');
+		$this->model_career->delete_data_kelurahan($id_tabel);
+		echo "Data berhasil di hapus";
+	}
 }

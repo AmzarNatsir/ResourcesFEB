@@ -162,4 +162,35 @@ class Model_career extends CI_Model {
         $this->db->where("id", $id);
         $this->db->delete("mst_kecamatan");
     }
+    //Kelurahan
+    function get_all_kelurahan($id_kecamatan)
+	{
+		return $this->db->where("id_kecamatan", $id_kecamatan)->get("mst_kelurahan")->result_array();
+	}
+    function insert_data_kalurahan($data)
+    {
+        $this->db->insert("mst_kelurahan", $data);
+    }
+    function get_profil_kelurahan($id)
+    {
+        $this->db->select("a.*, b.nama_kecamatan, c.nama_kabupaten, d.nama_provinsi");
+        $this->db->from("mst_kelurahan a");
+        $this->db->from("mst_kecamatan b");
+        $this->db->from("mst_kabupaten c");
+        $this->db->from("mst_provinsi d");
+        $this->db->where("a.id_kecamatan = b.id");
+        $this->db->where("a.id_kabupaten = c.id");
+        $this->db->where("a.id_provinsi = d.id");
+        return $this->db->where("a.id", $id)->get()->row();
+    }
+    function update_data_kelurahan($id, $data)
+    {
+        $this->db->where("id", $id);
+        $this->db->update("mst_kelurahan", $data);
+    }
+    function delete_data_kelurahan($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->delete("mst_kelurahan");
+    }
 }
