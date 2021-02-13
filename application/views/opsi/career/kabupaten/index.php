@@ -27,7 +27,8 @@
                   <thead>
                       <tr>
                       <th style="width: 5%">No.</th>
-                      <th style="width: 75%">Provinsi</th>
+                      <th style="width: 10%">Provinsi</th>
+                      <th style="width: 65%">Kabupaten</th>
                       <th style="width: 20%"></th>
                       </tr>
                   </thead>
@@ -38,7 +39,7 @@
                             ?>
                             <tr>
                                 <td><?php echo $nom;?>- <?php echo $dt['id'];?></td>
-                                <td><?php echo $dt['nama_provinsi'];?></td>
+                                <td colspan="2"><?php echo $dt['nama_provinsi'];?></td>
                                 <td>
                                     <button type="button" class="btn btn-primary tbl_add" data-toggle="modal" data-target="#modal-tambah" id="<?php echo $dt['id'];?>"><i class="fa fa-plus"></i> Tambah Kabupaten</button>
                                 </td>
@@ -49,6 +50,7 @@
                                 foreach($all_kab as $kab) 
                                 { ?>
                                 <tr>
+                                    <td></td>
                                     <td></td>
                                     <td><?php echo $kab['nama_kabupaten'];?></td>
                                     <td>
