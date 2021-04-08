@@ -193,4 +193,19 @@ class Model_career extends CI_Model {
         $this->db->where("id", $id);
         $this->db->delete("mst_kelurahan");
     }
+    //Informasi Loker
+    function get_loker_all()
+    {
+        return $this->db->select("a.*, b.nama_kategori, c.nama_provinsi, d.nama_kabupaten")
+                ->from("cc_loker a")
+                ->from("cc_mst_kategori_job b")
+                ->from("mst_provinsi c")
+                ->from("mst_kabupaten d")
+                ->where("a.id_kategori=b.id")
+                ->where("a.id_provinsi=c.id")
+                ->where("a.id_kabupaten=d.id")
+                ->where("a.tampilkan", 1)
+                ->order_by("a.tgl_posting", "desc")->get()->result_array();
+        
+    }
 }

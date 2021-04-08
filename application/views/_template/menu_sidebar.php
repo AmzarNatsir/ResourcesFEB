@@ -86,7 +86,7 @@
                 <li><a href="<?php echo base_url();?>opsi/kategori_id"><i class="fa fa-edit"></i> Kategori ID Resources</a></li>
               </ul>
             </li>
-              
+            <li><a href="<?php echo base_url();?>slide"><i class="fa fa-circle-o"></i> Slide</a></li>
             <li><a href="<?php echo base_url();?>berita"><i class="fa fa-circle-o"></i> Berita</a></li>
             <li><a href="<?php echo base_url();?>mitra"><i class="fa fa-circle-o"></i> Mitra</a></li>
             <li><a href="<?php echo base_url();?>faq"><i class="fa fa-circle-o"></i> FAQ</a></li>
@@ -120,9 +120,8 @@
                 <li><a href="<?php echo base_url();?>opsi/kelurahan"><i class="fa fa-circle-o"></i> Kelurahan</a></li>
               </ul>
             </li>
-            <li><a href="<?php echo base_url();?>loker_cc"><i class="fa fa-circle-o"></i> Lowongan Kerja</a></li>
-            <li><a href="<?php echo base_url();?>kegiatan_cc"><i class="fa fa-circle-o"></i> Kegiatan</a></li>
-            <li><a href="<?php echo base_url();?>informasi_cc"><i class="fa fa-circle-o"></i> Informasi</a></li>
+            <li><a href="<?php echo base_url();?>career/lowongan_kerja"><i class="fa fa-circle-o"></i> Info Lowongan Kerja</a></li>
+            <li><a href="<?php echo base_url();?>career/kegiatan"><i class="fa fa-circle-o"></i> Info Kegiatan</a></li>
           </ul>
         </li>
       </ul>
