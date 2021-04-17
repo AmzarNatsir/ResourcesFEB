@@ -2,8 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Career extends CI_Controller {
 
-	private $link_career = "http://localhost:8088/career.feb/";
-
 	function __construct()
 	{
 		parent::__construct();
@@ -46,11 +44,13 @@ class Career extends CI_Controller {
 	{
 		$this->Model_security->get_security();
 		$ada_file = $this->input->post("upload_gambar");
-        $id_user = $this->session->userdata("idalumni");
-        $arr_tgl_1 = explode("-", $this->input->post('tgl_star'));
-		$arr_tgl_2 = explode("-", $this->input->post('tgl_end'));
-		$tgl_awal = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
-		$tgl_akhir = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $id_user = NULL; //admin
+        //$arr_tgl_1 = explode("/", $this->input->post('tgl_star'));
+		//$arr_tgl_2 = explode("/", $this->input->post('tgl_end'));
+		//$tgl_awal = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+		//$tgl_akhir = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+		$tgl_awal = $this->input->post('tgl_star');
+		$tgl_akhir = $this->input->post('tgl_end');
         $data['id_user'] = $id_user;
         $data['id_kategori'] = $this->input->post("pil_kategori");
         $data['nama_perusahaan'] = trim($this->input->post("inp_nama_perusahaan"));
@@ -67,7 +67,7 @@ class Career extends CI_Controller {
             if(!empty($_FILES["inp_gambar"]["name"]))
             {
                 $nm_fl = time().date('dmY');
-                $fl = $this->upload_gambar($nm_fl, "inp_gambar", "loker");
+                $fl = $this->upload_gambar($nm_fl);
                 if ($fl != false) 
                 {
                     $smp_file = $fl;
@@ -78,14 +78,106 @@ class Career extends CI_Controller {
         $data['tgl_posting'] = date("Y-m-d");
         $data['tampilkan'] = 1; //informasi ditampilkan
         $data['pengunjung'] = 0;
-        $this->model_panel->insert_data_loker($data);
-        $this->session->set_flashdata("konfirm", "Data berhasil disimpan");
-        redirect("panel_career/manaj_loker_baru");
+        $this->model_career->insert_data_loker($data);
+        $this->session->set_flashdata("info", "Data berhasil disimpan");
+        redirect("career/lowongan_kerja");
 	}
+	public function edit_lowongan_kerja()
+	{
+		$this->Model_security->get_security();
+        $id_tabel = encrypt_decrypt('decrypt', $this->uri->segment(3));
+        $result = $this->model_career->get_profil_loker($id_tabel);
+        if(empty($result->id))
+        {
+            redirect("career/lowongan_kerja");
+        } else {
+            $this->_init();
+            $data['kategori_loker'] = $this->model_career->get_all_kategori_loker();
+            $data['provinsi'] = $this->model_career->get_all_provinsi();
+            $data['kabupaten'] = $this->model_career->get_all_kabupaten($result->id_provinsi);
+            $data['res'] = $result;
+            $this->load->view("proses/career_center/loker/edit", $data);
+        }
+	}
+	public function rubah_lowongan_kerja()
+	{
+		$this->Model_security->get_security();
+        $ada_file = $this->input->post("upload_gambar");
+        $id_tabel = $this->input->post("id_tabel");
+		$tgl_awal = $this->input->post('tgl_star');
+		$tgl_akhir = $this->input->post('tgl_end');
+        if($ada_file==1) {
+            if(!empty($_FILES["inp_gambar"]["name"]))
+            {
+                $nm_fl = time().date('dmY');
+                $fl = $this->upload_gambar($nm_fl);
+                if ($fl != false) 
+                {
+                    $smp_file = $fl;
+                    $data['file_lampiran'] = $smp_file;
+                    $data['id_kategori'] = $this->input->post("pil_kategori");
+                    $data['nama_perusahaan'] = trim($this->input->post("inp_nama_perusahaan"));
+                    $data['deskripsi'] = trim($this->input->post("inp_deskripsi"));
+                    $data['alamat'] = trim($this->input->post("inp_alamat_perusahaan"));
+                    $data['id_provinsi'] = trim($this->input->post("pil_provinsi"));
+                    $data['id_kabupaten'] = trim($this->input->post("pil_kabupaten"));
+                    $data['kontak_person'] = trim($this->input->post("inp_kontak_person"));
+                    $data['tgl_mulai'] = $tgl_awal;
+                    $data['tgl_akhir'] = $tgl_akhir;
+                    $data['sumber_link'] = trim($this->input->post("inp_sumber"));
+                    $data['ada_file'] = $ada_file;
+                    $data['tampilkan'] = $this->input->post("tampilkan_info");
+                    $this->model_career->remove_gambar_loker($id_tabel);
+                    $this->model_career->update_data_loker($id_tabel, $data);
+                }
+            } else {
+                $data['id_kategori'] = $this->input->post("pil_kategori");
+                $data['nama_perusahaan'] = trim($this->input->post("inp_nama_perusahaan"));
+                $data['deskripsi'] = trim($this->input->post("inp_deskripsi"));
+                $data['alamat'] = trim($this->input->post("inp_alamat_perusahaan"));
+                $data['id_provinsi'] = trim($this->input->post("pil_provinsi"));
+                $data['id_kabupaten'] = trim($this->input->post("pil_kabupaten"));
+                $data['kontak_person'] = trim($this->input->post("inp_kontak_person"));
+                $data['tgl_mulai'] = $tgl_awal;
+                $data['tgl_akhir'] = $tgl_akhir;
+                $data['sumber_link'] = trim($this->input->post("inp_sumber"));
+                $data['ada_file'] = $ada_file;
+                $data['tampilkan'] = $this->input->post("tampilkan_info");
+                $this->model_career->update_data_loker($id_tabel, $data);
+            }
+        } else {
+            $data['id_kategori'] = $this->input->post("pil_kategori");
+            $data['nama_perusahaan'] = trim($this->input->post("inp_nama_perusahaan"));
+            $data['deskripsi'] = trim($this->input->post("inp_deskripsi"));
+            $data['alamat'] = trim($this->input->post("inp_alamat_perusahaan"));
+            $data['id_provinsi'] = trim($this->input->post("pil_provinsi"));
+            $data['id_kabupaten'] = trim($this->input->post("pil_kabupaten"));
+            $data['kontak_person'] = trim($this->input->post("inp_kontak_person"));
+            $data['tgl_mulai'] = $tgl_awal;
+            $data['tgl_akhir'] = $tgl_akhir;
+            $data['sumber_link'] = trim($this->input->post("inp_sumber"));
+            $data['ada_file'] = $ada_file;
+            $data['file_lampiran'] = NULL;
+            $data['tampilkan'] = $this->input->post("tampilkan_info");
+            $this->model_career->remove_gambar_loker($id_tabel);
+            $this->model_career->update_data_loker($id_tabel, $data);
+        }
+        $this->session->set_flashdata("info", "Perubahan Data berhasil disimpan");
+        redirect("career/lowongan_kerja");
+	}
+	public function hapus_lowongan_kerja()
+    {
+        $this->Model_security->get_security();
+        $id_tabel = encrypt_decrypt('decrypt', $this->uri->segment(3));
+        $this->model_career->remove_gambar_loker($id_tabel);
+        $this->model_career->delete_data_loker($id_tabel);
+        $this->session->set_flashdata("info", "Data berhasil dihapus");
+        redirect("career/lowongan_kerja");
+    }
 	 //upload file
-	 private function upload_gambar($nm_file, $inp_nama, $folder)
+	 private function upload_gambar($nm_file)
 	 {
-		 $config['upload_path'] = $this->link_career.'assets/upload/'.$folder.'/';
+		 $config['upload_path'] = '../'.file_loker;
 		 $config['allowed_types'] = 'jpg|jpeg|jpg|png';
 		 $config['file_name'] = $nm_file;
 		 $config['remove_spaces'] = TRUE;
@@ -95,7 +187,7 @@ class Career extends CI_Controller {
 		 $this->load->library('upload');
 		 $this->upload->initialize($config);
  
-		 if ( ! $this->upload->do_upload($inp_nama))
+		 if ( ! $this->upload->do_upload("inp_gambar"))
 		 {
 			 $error = array('error' => $this->upload->display_errors());
 			 //print_r($error);

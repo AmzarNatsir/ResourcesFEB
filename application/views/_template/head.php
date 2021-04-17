@@ -36,12 +36,16 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/dist/css/daterangepicker.css" />
   <!-- jQuery 3 -->
   <script src="<?php echo base_url();?>assets/dist/js/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="<?php echo base_url();?>assets/dist/js/jquery-ui.min.js"></script>
   <script src="<?php echo base_url();?>assets/dist/js/jquery.number.js"></script>
   <script src="<?php echo base_url();?>assets/dist/mask/jquery.mask.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>assets/dist/js/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url();?>assets/dist/js/daterangepicker.js"></script>
+  
    
   <!--Form Validatin Script
   <script src="<?php echo base_url();?>assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>-->

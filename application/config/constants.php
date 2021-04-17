@@ -87,3 +87,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('NAMA_APLIKASI', 'RESOURCES | FEB Universitas Muhammadiya Makassar');
 define('NMUSR', 'admin');
 define('PSUSR', 'feb');
+define('file_loker', 'career.center/assets/upload/loker/');

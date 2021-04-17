@@ -208,4 +208,32 @@ class Model_career extends CI_Model {
                 ->order_by("a.tgl_posting", "desc")->get()->result_array();
         
     }
+    function get_profil_loker($id)
+    {
+        return $this->db->where("id", $id)->get("cc_loker")->row();
+    }
+    function insert_data_loker($data)
+    {
+        $this->db->insert("cc_loker", $data);
+    }
+    function update_data_loker($id, $data)
+    {
+        $this->db->where("id", $id)->update("cc_loker", $data);
+    }
+    function delete_data_loker($id)
+    {
+        $this->db->where("id", $id)->delete("cc_loker");
+    }
+    function remove_gambar_loker($id)
+    {
+        $this->db->select("file_lampiran");
+        $this->db->from("cc_loker");
+        $this->db->where('id', $id);
+        $res = $this->db->get();
+        $img = $res->row();
+        if(!empty($img->file_lampiran))
+        {
+            unlink(FCPATH.'../'.file_loker.$img->file_lampiran);
+        }
+    }
 }

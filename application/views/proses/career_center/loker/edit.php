@@ -18,36 +18,54 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header">
-            <h3 class="box-title">Input Informasi Lowongan Kerja Baru</h3>
+            <h3 class="box-title">Edit Informasi Lowongan Kerja</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-          <form action="<?php echo base_url();?>career/simpan_lowongan_kerja" method="post" onsubmit="return konfirm()" enctype="multipart/form-data">
+          <form action="<?php echo base_url();?>career/rubah_lowongan_kerja" method="post" onsubmit="return konfirm()" enctype="multipart/form-data">
+          <input type="hidden" name="id_tabel" value="<?php echo $res->id;?>">
           <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="inp_tampilan">Kategori Lowongan Kerja</label>
                     <select id="pil_kategori" name="pil_kategori" class="select2" data-placeholder="Pilihan Katgeori Lowongan Kerja" style="width: 100%;">
-                    <?php foreach($kat_loker as $kat) {
-                        echo "<option value=".$kat['id'].">".$kat['nama_kategori']."</option>";
+                    <?php foreach($kategori_loker as $kat) {
+                        if($kat['id']==$res->id_kategori){
+                            echo "<option value=".$kat['id']." selected>".$kat['nama_kategori']."</option>";
+                        } else {
+                            echo "<option value=".$kat['id'].">".$kat['nama_kategori']."</option>";
+                        }
                     } ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="inp_kategori">Nama Perusahaan</label>
-                    <input type="text" class="form-control" name="inp_nama_perusahaan" id="inp_nama_perusahaan" maxlength="200" required>
+                    <input type="text" class="form-control" name="inp_nama_perusahaan" id="inp_nama_perusahaan" maxlength="200"  value="<?php echo $res->nama_perusahaan;?>" required>
                 </div>
                 <div class="form-group">
                     <label for="inp_url">Alamat Perusahaan</label>
-                    <input type="text" class="form-control" name="inp_alamat_perusahaan" id="inp_alamat_perusahaan" maxlength="200" required>
+                    <input type="text" class="form-control" name="inp_alamat_perusahaan" id="inp_alamat_perusahaan" maxlength="200" value="<?php echo $res->alamat;?>" required>
                 </div>
                 <div class="form-group">
                     <label for="inp_kategori">Deskripsi</label>
-                    <textarea name="inp_deskripsi" id="inp_deskripsi" class="form-control" required></textarea>
+                    <textarea name="inp_deskripsi" id="inp_deskripsi" class="form-control" required><?php echo $res->deskripsi;?></textarea>
                 </div>
                 <hr>
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="pil_tampil">Tampilkan di Site (Career Center)</label>
+                    <div class="col-md-7">
+                        <label class="radio-inline" for="pil_tampil">
+                                <input type="radio" id="pil_tampil" name="tampilkan_info" value="1" <?php echo ($res->tampilkan==1)? "checked" : "" ?>> Ya
+                            </label>
+                            <label class="radio-inline" for="pil_tidak_tampil">
+                                <input type="radio" id="pil_tidak_tampil" name="tampilkan_info" value="2" <?php echo ($res->tampilkan==2)? "checked" : "" ?>> Tidak
+                            </label>
+                    </div>
+                </div>
+               
                 <div class="form-group form-actions">
                     <div class="col-md-12">
+                    <hr>
                         <button type="submit" class="btn btn-md btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
                     </div>
                 </div>
@@ -59,7 +77,11 @@
                     <option></option>
                     <?php 
                     foreach($provinsi as $prov){ 
-                        echo "<option value=".$prov['id'].">".strtoupper($prov['nama_provinsi'])."</option>";
+                        if($prov['id']==$res->id_provinsi){
+                            echo "<option value=".$prov['id']." selected>".strtoupper($prov['nama_provinsi'])."</option>";
+                        } else {
+                            echo "<option value=".$prov['id'].">".strtoupper($prov['nama_provinsi'])."</option>";
+                        }
                     }
                     ?>
                     </select>
@@ -68,45 +90,59 @@
                     <label for="pil_kabupaten">Kabupaten/Kota</label>
                     <select class="select2" name="pil_kabupaten" id="pil_kabupaten" data-placeholder="Pilihan Kabupaten/Kota" style="width: 100%;" required>
                     <option></option>
+                    <?php 
+                    foreach($kabupaten as $kab){ 
+                        if($kab['id']==$res->id_kabupaten){
+                            echo "<option value=".$kab['id']." selected>".strtoupper($kab['nama_kabupaten'])."</option>";
+                        } else {
+                            echo "<option value=".$kab['id'].">".strtoupper($kab['nama_kabupaten'])."</option>";
+                        }
+                    }
+                    ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="inp_kontak_person">Kontak Person</label>
-                    <input type="text" class="form-control" name="inp_kontak_person" id="inp_kontak_person" maxlength="100">
+                    <input type="text" class="form-control" name="inp_kontak_person" id="inp_kontak_person" maxlength="100" value="<?php echo $res->kontak_person;?>">
                 </div>
                 <div class="form-group">
                     <label for="inp_pelaksana">Masa Aktif Lowongan Kerja</label>
                     <div class="input-group input-daterange" data-date-format="dd-mm-yyyy">
-                        <input type="date" id="tgl_star" name="tgl_star" class="form-control text-center" placeholder="Mulai" value="<?php echo date("d-m-Y");?>" required>
+                        <input type="date" id="tgl_star" name="tgl_star" class="form-control text-center" placeholder="Mulai" value="<?php echo $res->tgl_mulai;?>" required>
                         <span class="input-group-addon"><i class="fa fa-angle-right"></i></span>
-                        <input type="date" id="tgl_end" name="tgl_end" class="form-control text-center" placeholder="Sampai" value="<?php echo date("d-m-Y");?>" required>
+                        <input type="date" id="tgl_end" name="tgl_end" class="form-control text-center" placeholder="Sampai" value="<?php echo $res->tgl_akhir;?>" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inp_sumber">Sumber/Link</label>
-                    <input type="text" class="form-control" name="inp_sumber" id="inp_sumber" maxlength="200">
+                    <input type="text" class="form-control" name="inp_sumber" id="inp_sumber" maxlength="200" value="<?php echo $res->sumber_link;?>">
                 </div>
                 <div class="form-group row">
                     <label class="col-md-4 control-label">Upload Gambar ?</label>
                     <div class="col-md-8">
                         <label class="radio-inline" for="pil_ya">
-                            <input type="radio" id="pil_ya" name="upload_gambar" value="1" checked> Ya
+                            <input type="radio" id="pil_ya" name="upload_gambar" value="1" <?php echo ($res->ada_file==1)? "checked" : "" ?>> Ya
                         </label>
                         <label class="radio-inline" for="pil_tidak">
-                            <input type="radio" id="pil_tidak" name="upload_gambar" value="2"> Tidak
+                            <input type="radio" id="pil_tidak" name="upload_gambar" value="2" <?php echo ($res->ada_file==2)? "checked" : "" ?>> Tidak
                         </label>
                     </div>
                 </div>
                 <hr> 
-                <div id="area_upload">
+                <div id="area_upload" style="<?php echo($res->ada_file==1)? "" : "display:none" ?> ">
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <input type="file" name="inp_gambar" id="inp_gambar" class="form-control" onchange="loadFile_file(this)" required>
+                            <input type="file" name="inp_gambar" id="inp_gambar" class="form-control" onchange="loadFile_file(this)">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12" style="text-align: center;">
-                            <img id="preview_file" style="width: 100%; height: auto;" src="">
+                            <img id="preview_file" style="width: 100%; height: auto;" 
+                            <?php if($res->ada_file==1) {?> 
+                                src="<?php echo "../../../".file_loker.$res->file_lampiran;?>"
+                            <?php } else {?> 
+                                src=""
+                            <?php } ?>>
                         </div>
                     </div>
                 </div>
@@ -135,7 +171,9 @@
         var isi = $("input[name=upload_gambar]:checked").val();
         if(isi==1) {
             $("#area_upload").show(1000);
+            $("#inp_gambar").attr("required", true);
         } else {
+            $("#inp_gambar").attr("required", false);
             $("#area_upload").hide(1000);
         }
     });

@@ -42,7 +42,11 @@
                 <tr>
                 <td><?php echo $nom;?></td>
                 <td style="text-align: center;">
-                    <img src="http://localhost:8088/career.feb/assets/upload/loker/<?php echo $dt1['file_lampiran'];?>" alt="Gambar" style="width: 50%;">
+                  <?php if($dt1['ada_file']==1){?>
+                    <img src="../../<?php echo file_loker.$dt1['file_lampiran'];?>" alt="Gambar" style="width: 50%;">
+                  <?php } else {?>
+                  Tidak Ada File
+                  <?php } ?>
                 </td>
                 <td><?php echo date_format(date_create($dt1['tgl_posting']), "d/m/y");?><br><?php echo (empty($dt1['id_user'])) ? "Admin" : "Alumni" ?></td>
                 <td>
@@ -52,7 +56,10 @@
                 <p class="push-bit">Kategori : <?php echo $dt1['nama_kategori'];?> | <?php echo $dt1['pengunjung'];?></p>
                 </td>
                 <td>
-                <button type="button" class="btn btn-primary tbl_edit" id="<?php echo $dt1['id'];?>" title="Edit Data" data-toggle="modal" data-target="#modal-edit"><i class="fa fa-edit"></i></button>
+                <button type="button" class="btn btn-primary tbl_edit" id="<?php echo encrypt_decrypt('encrypt', $dt1['id']);?>" data-toggle="tooltip" title="Edit Data" onclick="goEdit(this)"><i class="fa fa-edit"></i></button>
+                <?php if(empty($dt1['id_user'])){ ?>
+                <a href="<?= base_url() ?>career/hapus_lowongan_kerja/<?php echo encrypt_decrypt('encrypt', $dt1['id']) ?>" class="btn btn-danger" onclick="return konfirmHapus()" data-toggle="tooltip" title="Hapus Data"><i class="fa fa-remove"></i></a>
+                <?php } ?>
                 </td>
                 </tr>
                 <?php $nom++; } ?>
@@ -64,22 +71,6 @@
     </div>
   </section>
 </div>
-<!-- Modal Edit -->
-<div class="modal modal-warning fade" id="modal-edit" data-backdrop="false">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit Data </h4>
-      </div>
-      <div id="frm_modal"></div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 <script type="text/javascript">
   $(document).ready(function()
   {
@@ -90,33 +81,19 @@
     {
       window.location.assign("<?php echo base_url();?>career/tambah_lowongan_kerja");
     });
-    $(".tbl_edit").on("click", function()
-    {
-      var id_data = this.id;
-      $("#frm_modal").load("<?php echo base_url();?>berita/edit_data/"+id_data);
-    });
   });
-  function konfirm()
+  var goEdit = function(el) {
+    window.location.assign("<?php echo base_url();?>career/edit_lowongan_kerja/"+el.id);
+  }
+  function konfirmHapus()
   {
-    var psn = confirm("Yakin akan menyimpan data ?");
+    var psn = confirm("Yakin akan menghapus data ?");
     if(psn==true)
     {
       return true;
     } else {
       return false;
     }
-  }
-  function readURL(input) 
-  {
-      if (input.files && input.files[0]) {
-          var reader = new FileReader();
 
-          reader.onload = function (e) {
-              $('#img_preview')
-                  .attr('src', e.target.result);
-          };
-
-          reader.readAsDataURL(input.files[0]);
-      }
   }
 </script>
