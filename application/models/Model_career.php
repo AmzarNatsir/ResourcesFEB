@@ -236,4 +236,41 @@ class Model_career extends CI_Model {
             unlink(FCPATH.'../'.file_loker.$img->file_lampiran);
         }
     }
+    //informasi kegiatan
+    function insert_data_kegiatan($data)
+    {
+        $this->db->insert("cc_kegiatan", $data);
+    }
+    function update_data_kegiatan($id, $data)
+    {
+        $this->db->where("id", $id)->update("cc_kegiatan", $data);
+    }
+    function delete_data_kegiatan($id)
+    {
+        $this->db->where("id", $id)->delete("cc_kegiatan");
+    }
+    function get_kegiatan_all()
+    {
+        return $this->db->select("a.*, b.nama_kategori")
+                ->from("cc_kegiatan a")
+                ->from("cc_mst_kategori_kegiatan b")
+                ->where("a.id_kategori=b.id")
+                ->order_by("a.tgl_posting", "desc")->get()->result_array();
+    }
+    function get_profil_kegiatan($id)
+    {
+        return $this->db->where("id", $id)->get("cc_kegiatan")->row();
+    }
+    function remove_gambar_kegiatan($id)
+    {
+        $this->db->select("file_gambar");
+        $this->db->from("cc_kegiatan");
+        $this->db->where('id', $id);
+        $res = $this->db->get();
+        $img = $res->row();
+        if(!empty($img->file_gambar))
+        {
+            unlink(FCPATH.'../'.file_kegiatan.$img->file_gambar);
+        }
+    }
 }

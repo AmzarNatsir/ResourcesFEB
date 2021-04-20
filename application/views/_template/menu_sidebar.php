@@ -121,7 +121,7 @@
               </ul>
             </li>
             <li><a href="<?php echo base_url();?>career/lowongan_kerja"><i class="fa fa-circle-o"></i> Info Lowongan Kerja</a></li>
-            <li><a href="<?php echo base_url();?>career/kegiatan"><i class="fa fa-circle-o"></i> Info Kegiatan</a></li>
+            <li><a href="<?php echo base_url();?>career/info_kegiatan"><i class="fa fa-circle-o"></i> Info Kegiatan</a></li>
           </ul>
         </li>
       </ul>

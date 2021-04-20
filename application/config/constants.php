@@ -88,3 +88,4 @@ define('NAMA_APLIKASI', 'RESOURCES | FEB Universitas Muhammadiya Makassar');
 define('NMUSR', 'admin');
 define('PSUSR', 'feb');
 define('file_loker', 'career.center/assets/upload/loker/');
+define('file_kegiatan', 'career.center/assets/upload/kegiatan/');
