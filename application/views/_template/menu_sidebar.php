@@ -25,9 +25,11 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>kalender_akademik"><i class="fa fa-calendar"></i> Kalender Akademik</a></li>
-            <li><a href="<?php echo base_url();?>jadwal_perkuliahan"><i class="fa fa-calendar"></i>Jadwal Perkuliahan</a></li>
-            <li><a href="<?php echo base_url();?>permohonan_kkp"><i class="fa fa-book"></i>Permohonan KKP</a></li>
+            <!--<li><a href="<?php echo base_url();?>jadwal_perkuliahan"><i class="fa fa-calendar"></i>Jadwal Perkuliahan</a></li>-->
+            <li><a href="<?php echo base_url();?>akademik/matakuliah"><i class="fa fa-book"></i>Matakuliah</a></li>
+            <li><a href="<?php echo base_url();?>akademik/mahasiswa"><i class="fa fa-user"></i> Mahasiswa</a></li>
             <li><a href="<?php echo base_url();?>dosen"><i class="fa fa-user"></i> Dosen</a></li>
+            <li><a href="<?php echo base_url();?>permohonan_kkp"><i class="fa fa-book"></i>Permohonan KKP</a></li>
             <!--
             <li><a href="<?php echo base_url();?>mahasiswa"><i class="fa fa-user"></i> Mahasiswa</a></li>
             <li><a href="<?php echo base_url();?>tendik"><i class="fa fa-user"></i> Tenaga Kependidikan</a></li>
@@ -122,6 +124,19 @@
             </li>
             <li><a href="<?php echo base_url();?>career/lowongan_kerja"><i class="fa fa-circle-o"></i> Info Lowongan Kerja</a></li>
             <li><a href="<?php echo base_url();?>career/info_kegiatan"><i class="fa fa-circle-o"></i> Info Kegiatan</a></li>
+          </ul>
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-globe text-red"></i>
+            <span>COMPUTER BASED TEST <br>(cbt.feb.unismuh.ac.id)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url();?>cbt/buat_soal"><i class="fa fa-circle-o"></i> Pembuatan Soal</a></li>
+            <li><a href="<?php echo base_url();?>cbt/bank_soal"><i class="fa fa-circle-o"></i> Bank Soal</a></li>
+            <li><a href="<?php echo base_url();?>cbt/hasil_ujian"><i class="fa fa-circle-o"></i> Hasil Ujian</a></li>
           </ul>
         </li>
       </ul>

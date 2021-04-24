@@ -130,10 +130,6 @@ class Model_opsi extends CI_Model
 	{
 		return $this->db->get("jenis_4_pend_dos")->result_array();
 	}
-	function get_all_matakuliah()
-	{
-		return $this->db->get("5_akademik_matakuliah")->result_array();
-	}
 	function get_all_dosen()
 	{
 		return $this->db->get("4_1_biodata_dosen")->result_array();
@@ -141,5 +137,18 @@ class Model_opsi extends CI_Model
 	function get_all_kategori_id()
 	{
 		return $this->db->get("opsi_kategori_id")->result_array();
+	}
+	//matakuliah
+	function get_all_matakuliah()
+	{
+		return $this->db->get("5_akademik_matakuliah")->result_array();
+	}
+	function get_jenis_matakuliah()
+	{
+		return $this->db->get("jenis_5_matakuliah")->result_array();
+	}
+	function get_semester()
+	{
+		return $this->db->get("jenis_5_semester")->result_array();
 	}
 }
