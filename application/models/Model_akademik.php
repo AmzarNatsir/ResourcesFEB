@@ -7,6 +7,10 @@ class Model_akademik extends CI_Model {
 		$this->load->database();		
 	}
     //matakuliah
+    public function insert_matakuliah($data)
+    {
+        $this->db->insert("5_akademik_matakuliah", $data);
+    }
     public function get_matakuliah_per_prodi($id_prodi)
     {
         return $this->db->select("a.*, b.jenis_matakuliah")
@@ -18,5 +22,15 @@ class Model_akademik extends CI_Model {
             ->order_by("a.semester")
             ->order_by("a.kode_matakuliah")
             ->get()->result_array();
+    }
+    public function get_kode_matakuliah($kode)
+    {
+        $result = $this->db->where("kode_matakuliah", $kode)->get("5_akademik_matakuliah")->row();
+        if(empty($result->id_matakuliah)){
+            $hasil = "false";
+        } else {
+            $hasil = "true";
+        }
+        return $hasil;
     }
 }

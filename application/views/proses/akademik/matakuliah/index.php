@@ -55,18 +55,19 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $('.select2').select2();
-        $("#tbl_filter").on("click", function()
+      window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+      $('.select2').select2();
+      $("#tbl_filter").on("click", function()
+      {
+        var pil_ps = $("#pil_ps").val();
+        if(pil_ps=="")
         {
-          var pil_ps = $("#pil_ps").val();
-          if(pil_ps=="")
-          {
-            alert("Pilihan program studi masih kosong..");
-            return false;
-          } else {
-            $("#view_result").load("<?php echo base_url();?>akademik/tampilkan_matakuliah/"+pil_ps);
-          }
-        });
+          alert("Pilihan program studi masih kosong..");
+          return false;
+        } else {
+          $("#view_result").load("<?php echo base_url();?>akademik/tampilkan_matakuliah/"+pil_ps);
+        }
+      });
     });
     var goTambahData = function()
     {

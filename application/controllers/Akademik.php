@@ -37,4 +37,26 @@ class Akademik extends CI_Controller
         $data['semester'] = $this->model_opsi->get_semester();
         $this->load->view("proses/akademik/matakuliah/add_matakuliah", $data);
     }
+    public function cek_kode_matakuliah()
+    {
+        $kode = $this->input->post("kode");
+        $result = $this->model_akademik->get_kode_matakuliah($kode);
+        echo $result;
+    }
+    public function simpan_matakuliah()
+    {
+        $this->Model_security->get_security();
+        $data['program_studi'] = $this->input->post("pil_ps");
+        $data['kode_matakuliah'] = $this->input->post("inp_kode_matkul");
+        $data['jenis_mk'] = $this->input->post("pil_jenis");
+        $data['nama_matakuliah'] = $this->input->post("inp_nama_matkul");
+        $data['semester'] = $this->input->post("pil_semester");
+        $data['sks'] = $this->input->post("inp_sks");
+        $data['jumlah_pertemuan'] = $this->input->post("inp_jumlah_pertemuan");
+        $data['jumlah_menit_pertemuan'] = $this->input->post("inp_menit_pertemuan");
+        $data['aktif'] = 1;
+        $this->model_akademik->insert_matakuliah($data);
+        $this->session->set_flashdata('info', "Matakuliah baru berhasil disimpan");
+		redirect('akademik/matakuliah');
+    }
 }
