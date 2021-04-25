@@ -59,4 +59,20 @@ class Akademik extends CI_Controller
         $this->session->set_flashdata('info', "Matakuliah baru berhasil disimpan");
 		redirect('akademik/matakuliah');
     }
+    //mahasiswa
+    public function mahasiswa()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+        $data['mst_prodi'] = $this->model_opsi->get_master_prodi();
+        $data['mst_ta'] = $this->model_opsi->get_master_thn_akademik();
+		$this->load->view('proses/akademik/mahasiswa/index', $data);
+	}
+    public function tampilkan_mahasiswa()
+    {
+        $id_ta = $this->input->post("pil_ta");
+        $id_prodi = $this->input->post("pil_ps");
+		$data['list_mahasiswa'] = $this->model_akademik->get_mahasiswa_filter($id_ta, $id_prodi);
+		$this->load->view("proses/akademik/mahasiswa/v_mahasiswa", $data);
+    }
 }
