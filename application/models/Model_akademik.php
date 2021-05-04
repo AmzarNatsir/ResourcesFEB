@@ -38,4 +38,6 @@ class Model_akademik extends CI_Model {
     {
         return $this->db->where("thn_akademik", $id_ta)->where("prodi_mhs", $id_prodi)->where("status", 1)->get("3_1_biodata_mahasiswa")->result_array();
     }
+    //dosen
+    
 }

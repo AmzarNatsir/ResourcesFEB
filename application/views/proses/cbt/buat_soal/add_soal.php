@@ -18,11 +18,8 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">FORM PEMBUATAN SOAL</h3>
+            <h3 class="box-title">FORM PEMBUATAN SOAL (STEP 2)</h3>
             <hr>
-            <fieldset>
-              
-            </fieldset>
           </div>
         </div>
       </div>
