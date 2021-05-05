@@ -607,6 +607,7 @@ class Cbt extends CI_Controller
         $this->Model_security->get_security();
 		$this->_init();
         $data['mst_prodi'] = $this->model_opsi->get_master_prodi();
+		$data['head_soal'] = $this->model_cbt->get_all_head_soal();
 		$this->load->view('proses/cbt/bank_soal/index', $data);
     }
 	public function daftar_soal()

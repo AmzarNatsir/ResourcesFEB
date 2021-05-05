@@ -68,4 +68,14 @@ class Model_cbt extends CI_Model {
             unlink(FCPATH.'assets/upload/cbt/'.$folder."/".$img->$nm_field);
         }
     }
+    //bank soal
+    function get_all_head_soal()
+    {
+        return $this->db->select("a.*, b.nama_ps, c.nama_matakuliah")
+                ->from("cbt_bank_soal_head a")
+                ->from("1_2_identitas_ps b")
+                ->from("5_akademik_matakuliah c")
+                ->where("a.id_prodi=b.id_ps")
+                ->where("a.id_matakuliah=c.id_matakuliah")->get()->result_array();
+    }
 }
