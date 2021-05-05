@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">FORM PEMBUATAN SOAL (STEP 1)</h3>
+            <h3 class="box-title">FORM PEMBUATAN SOAL</h3>
             <hr>
             <div class="row">
               <div class="col-md-6">
@@ -63,7 +63,7 @@
                   <hr>
                   <div class="form-group form-actions">
                       <div class="col-md-12">
-                          <button type="submit" class="btn btn-md btn-primary" id="tbl_simpan" disabled><i class="fa fa-angle-right"></i> Klik untuk melanjutkan ke tahap pembuatan soal (Step 2)</button>
+                          <button type="submit" class="btn btn-md btn-primary" id="tbl_simpan" disabled><i class="fa fa-angle-right"></i> Klik untuk melanjutkan ke tahap pembuatan soal</button>
                       </div>
                   </div>
                 </fieldset>

@@ -52,16 +52,11 @@ class Cbt extends CI_Controller
 		$data['kode_soal'] = $this->input->post('inp_kode_soal');
 		$data['aktif'] = 1;
 		$data['tanggal_post'] = date("Y-m-d");
-		$this->model_cbt->insert_soal_head($data);
+		$id_h = $this->model_cbt->insert_soal_head($data);
 		$this->session->set_flashdata('info', "Data tahap awal berhasil disimpan. Silahkan lanjutkan tahap kedua yaitu pembuatan soal.");
-		redirect('cbt/buat_soal_tahap_dua');
+		redirect('cbt/tambah_soal/'.encrypt_decrypt('encrypt', $id_h));
 	}
-	public function buat_soal_tahap_dua()
-    {
-        $this->Model_security->get_security();
-		$this->_init();
-		$this->load->view('proses/cbt/buat_soal/add_soal');
-    }
+	
 	public function tambah_soal()
 	{
 		$this->Model_security->get_security();
@@ -245,6 +240,299 @@ class Cbt extends CI_Controller
 			$detail['d_2'] = $fl_pil_d;
 			$this->model_cbt->insert_detail($detail);
 			$pesan = "Data Telah Disimpan. Lanjutkan penginputan soal berikutnya";
+			$err=1;
+		}
+		else
+		{
+			$pesan = $pesan_err;
+			$err=2;			
+		}
+		echo $pesan."-".$err;
+	}
+	public function edit_soal_detail()
+	{
+		$this->Model_security->get_security();
+		$id_d = encrypt_decrypt('decrypt', $this->uri->segment(3));
+		$res = $this->model_cbt->get_detail_soal_row($id_d);
+		if(empty($res->id)) {
+			redirect("cbt/buat_soal");
+		} else {
+			$this->_init();
+			$data["dt_h"] = $this->model_cbt->get_head_soal($res->id_head);
+			$data['res'] = $res;
+			$this->load->view("proses/cbt/buat_soal/edit_soal", $data);
+		}
+	}
+	public function rubah_soal_detail()
+	{
+		$sts_simpan="";
+		$kat_soal_gambar = "";
+		$pesan_err = "";
+		$id_head = encrypt_decrypt('decrypt', $this->input->post('id_soal'));
+		$id_detail = $this->input->post('id_detail');
+		if($this->input->post('pil_soal_gbr')=='on')
+		{
+			$nm_fl_soal = $id_head."-".time().date('dmY');
+			if(empty($_FILES['soal_gambar']['name']))
+			{
+				if(empty($this->input->post('file_soal_gbr')))
+				{
+					$pesan_err = "File Soal Gambar Tidak Boleh Kosong!";
+					$sts_simpan=2;
+				}
+				else
+				{
+					$fl_soal = $this->input->post('file_soal_gbr');
+					$kat_soal_gambar=1;
+					$sts_simpan=1;	
+				}
+			}
+			else
+			{
+				$fl_1 = $this->upload_file_soal($nm_fl_soal, "head", "soal_gambar");
+				if ($fl_1 != false) 
+				{
+					$fl_soal = $fl_1;
+					$kat_soal_gambar=1;
+					$sts_simpan=1;
+
+				}
+				else
+				{
+					$pesan_err = "Proses Upload File Gambar Soal Gagal Disimpan. Tipe File salah";
+					$sts_simpan=2;
+				}
+			}
+		}
+		else
+		{
+			$fl_soal="";
+			$sts_simpan=1;
+			$kat_soal_gambar=2;
+		}
+		if($this->input->post('j_a')==1)
+		{
+			$fl_pil_a="";
+			$sts_simpan=1;
+		}
+		else
+		{
+			$nm_fl_a = $id_head."-a-".time().date('dmY');
+			if(empty($_FILES['file_a']['name']))
+			{
+				if(empty($this->input->post('file_pil_gbr_a')))
+				{
+					$pesan_err = "File Pilihan Jawaban (a) Tidak Boleh Kosong!";
+					$sts_simpan=2;
+				}
+				else
+				{
+					$fl_pil_a = $this->input->post('file_pil_gbr_a');
+					$sts_simpan=1;
+				}
+			}
+			else
+			{
+				$fl_a = $this->upload_file_soal($nm_fl_a, "detail", "file_b");
+				if ($fl_a != false) 
+				{
+					$fl_pil_a = $fl_a;
+					$sts_simpan=1;
+				}
+				else
+				{
+					$pesan_err = "Proses Upload File Pilihan Jawaban (a) Gagal Disimpan. Tipe File salah";
+					$sts_simpan=2;
+				}
+			}	
+		}
+		if($this->input->post('j_b')==1)
+		{
+			$fl_pil_b="";
+			$sts_simpan=1;
+		}
+		else
+		{
+			$nm_fl_b = $id_head."-b-".time().date('dmY');
+			if(empty($_FILES['file_b']['name']))
+			{
+				if(empty($this->input->post('file_pil_gbr_b')))
+				{
+					$pesan_err = "File Pilihan Jawaban (b) Tidak Boleh Kosong!";
+					$sts_simpan=2;
+				}
+				else
+				{
+					$fl_pil_b = $this->input->post('file_pil_gbr_b');
+					$sts_simpan=1;
+				}
+			}
+			else
+			{
+				$fl_b = $this->upload_file_soal($nm_fl_b, "detail", "file_b");
+				if ($fl_b != false) 
+				{
+					$fl_pil_b = $fl_b;
+					$sts_simpan=1;
+				}
+				else
+				{
+					$pesan_err = "Proses Upload File Pilihan Jawaban (b) Gagal Disimpan. Tipe File salah";
+					$sts_simpan=2;
+				}
+			}	
+		}
+		if($this->input->post('j_c')==1)
+		{
+			$fl_pil_c="";
+			$sts_simpan=1;
+		}
+		else
+		{
+			$nm_fl_c = $id_head."-c-".time().date('dmY');
+			if(empty($_FILES['file_c']['name']))
+			{
+				if(empty($this->input->post('file_pil_gbr_c')))
+				{
+					$pesan_err = "File Pilihan Jawaban (c) Tidak Boleh Kosong!";
+					$sts_simpan=2;
+				}
+				else
+				{
+					$fl_pil_c = $this->input->post('file_pil_gbr_c');
+					$sts_simpan=1;
+				}
+			}
+			else
+			{
+				$fl_c = $this->upload_file_soal($nm_fl_c, "detail", "file_c");
+				if ($fl_c != false) 
+				{
+					$fl_pil_c = $fl_c;
+					$sts_simpan=1;
+				}
+				else
+				{
+					$pesan_err = "Proses Upload File Pilihan Jawaban (c) Gagal Disimpan. Tipe File salah";
+					$sts_simpan=2;
+				}
+			}	
+		}
+		if($this->input->post('j_d')==1)
+		{
+			$fl_pil_d="";
+			$sts_simpan=1;
+		}
+		else
+		{
+			$nm_fl_d = $id_head."-d-".time().date('dmY');
+			if(empty($_FILES['file_d']['name']))
+			{
+				if(empty($this->input->post('file_pil_gbr_d')))
+				{
+					$pesan_err = "File Pilihan Jawaban (d) Tidak Boleh Kosong!";
+					$sts_simpan=2;
+				}
+				else
+				{
+					$fl_pil_d = $this->input->post('file_pil_gbr_d');
+					$sts_simpan=1;
+				}
+			}
+			else
+			{
+				$fl_d = $this->upload_file_soal($nm_fl_d, "detail", "file_d");
+				if ($fl_d != false) 
+				{
+					$fl_pil_d = $fl_d;
+					$sts_simpan=1;
+				}
+				else
+				{
+					$pesan_err = "Proses Upload File Pilihan Jawaban (d) Gagal Disimpan. Tipe File salah";
+					$sts_simpan=2;
+				}
+			}	
+		}
+		if($sts_simpan==1)
+		{
+			$key = $id_detail;
+			//$detail['id_head'] = $id_head;
+			//$detail['kat_soal'] = 1;
+			$detail['soal_teks'] = $this->input->post('v_isi_soal');
+			$detail['kat_gambar'] = $kat_soal_gambar;
+			$detail['soal_gambar'] = $fl_soal;
+			$detail['jawaban'] = $this->input->post('jawaban');
+			$detail['s_a'] = $this->input->post('j_a');
+			$detail['s_b'] = $this->input->post('j_b');
+			$detail['s_c'] = $this->input->post('j_c');
+			$detail['s_d'] = $this->input->post('j_d');
+
+			if($this->input->post('j_a')==1)
+			{
+				$detail['a_1'] = $this->input->post('v_isi_pil_a');
+				$detail['a_2'] = $fl_pil_a;
+			}
+			else
+			{
+				$detail['a_1'] = "";
+				$detail['a_2'] = $fl_pil_a;
+			}
+			if($this->input->post('j_b')==1)
+			{
+				$detail['b_1'] = $this->input->post('v_isi_pil_b');
+				$detail['b_2'] = $fl_pil_b;
+			}
+			else
+			{
+				$detail['b_1'] = "";
+				$detail['b_2'] = $fl_pil_b;
+			}
+			if($this->input->post('j_c')==1)
+			{
+				$detail['c_1'] = $this->input->post('v_isi_pil_c');
+				$detail['c_2'] = $fl_pil_c;
+			}
+			else
+			{
+				$detail['c_1'] = "";
+				$detail['c_2'] = $fl_pil_c;
+			}
+
+			if($this->input->post('j_d')==1)
+			{
+				$detail['d_1'] = $this->input->post('v_isi_pil_d');
+				$detail['d_2'] = $fl_pil_d;
+			}
+			else
+			{
+				$detail['d_1'] = "";
+				$detail['d_2'] = $fl_pil_d;
+			}
+			//hapus file sebelumnya
+			if(!empty($this->input->post('file_soal_gbr')) && $kat_soal_gambar==1 && !empty($_FILES['soal_gambar']['name']) || !empty($this->input->post('file_soal_gbr')) && $kat_soal_gambar=2 && !empty($_FILES['soal_gambar']['name']))
+			{
+				$this->model_cbt->remove_file_soal($key, 'head', 'soal_gambar');
+			}
+
+			if(!empty($this->input->post('file_pil_gbr_a')) && $this->input->post('j_a')==1 || !empty($this->input->post('file_pil_gbr_a')) && $this->input->post('j_a')==2 && !empty($_FILES['file_a']['name']))
+			{
+				$this->model_cbt->remove_file_soal($key, 'detail', 'a_2');
+			}
+			if(!empty($this->input->post('file_pil_gbr_b')) && $this->input->post('j_b')==1 || !empty($this->input->post('file_pil_gbr_b')) && $this->input->post('j_b')==2 && !empty($_FILES['file_b']['name']))
+			{
+				$this->model_cbt->remove_file_soal($key, 'detail', 'b_2');
+			}
+			if(!empty($this->input->post('file_pil_gbr_c')) && $this->input->post('j_c')==1 || !empty($this->input->post('file_pil_gbr_c')) && $this->input->post('j_c')==2 && !empty($_FILES['file_c']['name']))
+			{
+				$this->model_cbt->remove_file_soal($key, 'detail', 'c_2');
+			}
+			if(!empty($this->input->post('file_pil_gbr_d')) && $this->input->post('j_d')==1 || !empty($this->input->post('file_pil_gbr_d')) && $this->input->post('j_d')==2 && !empty($_FILES['file_d']['name']))
+			{
+				$this->model_cbt->remove_file_soal($key, 'detail', 'd_2');
+			}
+			$this->model_cbt->update_detail($key, $detail);
+			$pesan = "Perubahan Data Soal Telah Disimpan.";
 			$err=1;
 		}
 		else

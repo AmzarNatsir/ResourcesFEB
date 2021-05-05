@@ -24,10 +24,15 @@ class Model_cbt extends CI_Model {
     function insert_soal_head($data)
     {
         $this->db->insert("cbt_bank_soal_head", $data);
+        return $this->db->insert_id();
     }
     function insert_detail($data)
     {
         $this->db->insert("cbt_bank_soal_detail", $data);
+    }
+    function update_detail($id, $data)
+    {
+        $this->db->where("id", $id)->update("cbt_bank_soal_detail", $data);
     }
     function delete_detail_soal($id)
     {

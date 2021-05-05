@@ -149,7 +149,8 @@
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td colspan="8"><button class="btn btn-primary tbl_edit" name="tbl_edit" id="<?php echo $dt2['id'];?>">Edit Soal</button> | <a href="<?php echo site_url();?>cbt/hapus_soal_detail/<?php echo encrypt_decrypt('encrypt', $dt2['id']);?>" class="btn btn-warning" onclick="return konfHapus()">Hapus Soal</a></td>
+                                        <td colspan="8">
+                                        <button class="btn btn-primary tbl_edit" name="tbl_edit" id="<?php echo encrypt_decrypt('encrypt', $dt2['id']);?>">Edit Soal</button> | <a href="<?php echo site_url();?>cbt/hapus_soal_detail/<?php echo encrypt_decrypt('encrypt', $dt2['id']);?>" class="btn btn-warning" onclick="return konfHapus()">Hapus Soal</a></td>
                                     </tr>
                                     <?php
                                     $nom++;
@@ -169,6 +170,11 @@
 $(document).ready(function()
 {
     window.setTimeout(function () { $(".alert").alert('close'); }, 2000);
+    $(".tbl_edit").on("click", function()
+    {
+        var id_soal = this.id;
+        window.location.assign("<?php echo base_url();?>cbt/edit_soal_detail/"+id_soal);
+    });
 });
 var konfHapus = function()
 {
