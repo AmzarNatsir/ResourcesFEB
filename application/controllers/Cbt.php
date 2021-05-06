@@ -577,6 +577,20 @@ class Cbt extends CI_Controller
 			redirect("cbt/daftar_soal/".$id_head);
 		}
 	}
+	public function daftar_soal()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$id_h = encrypt_decrypt('decrypt', $this->uri->segment(3));
+		$res = $this->model_cbt->get_head_soal($id_h);
+		if(empty($res->id)) {
+			redirect("cbt/buat_soal");
+		} else {
+			$data["dt_h"] = $this->model_cbt->get_head_soal($id_h);
+			$data['dt_d'] = $this->model_cbt->get_detail_soal($id_h);
+			$this->load->view('proses/cbt/buat_soal/list_soal', $data);
+		}
+	}
 	function upload_file_soal($nm_file, $folder, $el_name)
 	{
 		$config['upload_path'] = 'assets/upload/cbt/'.$folder;
@@ -610,18 +624,18 @@ class Cbt extends CI_Controller
 		$data['head_soal'] = $this->model_cbt->get_all_head_soal();
 		$this->load->view('proses/cbt/bank_soal/index', $data);
     }
-	public function daftar_soal()
+	public function bank_soal_detail()
 	{
 		$this->Model_security->get_security();
 		$this->_init();
 		$id_h = encrypt_decrypt('decrypt', $this->uri->segment(3));
 		$res = $this->model_cbt->get_head_soal($id_h);
 		if(empty($res->id)) {
-			redirect("cbt/buat_soal");
+			redirect("cbt/bank_soal");
 		} else {
 			$data["dt_h"] = $this->model_cbt->get_head_soal($id_h);
 			$data['dt_d'] = $this->model_cbt->get_detail_soal($id_h);
-			$this->load->view('proses/cbt/buat_soal/list_soal', $data);
+			$this->load->view('proses/cbt/bank_soal/detail_soal', $data);
 		}
 	}
 }

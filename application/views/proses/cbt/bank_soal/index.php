@@ -27,8 +27,8 @@
                   <th style="width: 15%;">Program Studi</th>
                   <th style="width: 10%;">Kode Soal</th>
                   <th style="width: 25%;">Matakuliah</th>
+                  <th style="width: 10%;">Soal</th>
                   <th>Team Pembuat Soal</th>
-                  <th style="width: 10%;">Aktif</th>
                   <th style="width: 10%;">Aksi</th>
                   </thead>
                   <tbod>
@@ -46,6 +46,7 @@
                   <td><?= $dt['nama_ps'] ?></td>
                   <td><?= $dt['kode_soal'] ?></td>
                   <td><?= $dt['nama_matakuliah'] ?></td>
+                  <td><?php echo count($this->model_cbt->get_detail_soal($dt['id']));?> Soal</td>
                   <td><?php 
                   $arr_dosen = explode(",", $dt['team_dosen']);
                   for ($i=0; $i < count($arr_dosen); $i++) 
@@ -58,9 +59,8 @@
                       $nom++;
                   }
                   unset($all_dosen); ?></td>
-                  <td><?= ($dt['aktif']==1) ? 'Aktif' : 'Tidak Aktif' ?></td>
                   <td>
-                  <a href="#"><i class="btn btn-primary fa fa-plus-square-o add_data" title="Tambah Data Soal" id="<?php echo encrypt_decrypt('encrypt', $dt['id']);?>"></i></a>
+                  <a href="<?php echo base_url();?>cbt/bank_soal_detail/<?php echo encrypt_decrypt('encrypt', $dt['id']);?>"><i class="btn btn-primary fa fa-eye" title="Tampilkan Soal"></i></a>
                   </td>
                   </tr>
                   <?php 

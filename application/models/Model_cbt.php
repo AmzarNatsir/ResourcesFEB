@@ -50,7 +50,7 @@ class Model_cbt extends CI_Model {
     }
     function get_detail_soal($id_h)
     {
-        return $this->db->where("id_head", $id_h)->get("cbt_bank_soal_detail", $id_h)->result_array();
+        return $this->db->where("id_head", $id_h)->get("cbt_bank_soal_detail")->result_array();
     }
     function get_detail_soal_row($id_d)
     {

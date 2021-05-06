@@ -3,7 +3,7 @@
     <th style="width: 5%;">No</th>
     <th style="width: 15%;">Kode Soal</th>
     <th>Team Pembuat Soal</th>
-    <th style="width: 10%;">Aktif</th>
+    <th style="width: 10%;">Soal</th>
     <th style="width: 10%;">Aksi</th>
     </thead>
     <tbod>
@@ -31,7 +31,7 @@
         $nom++;
     }
     unset($all_dosen); ?></td>
-    <td><?= ($dt['aktif']==1) ? 'Aktif' : 'Tidak Aktif' ?></td>
+    <td><?php echo count($this->model_cbt->get_detail_soal($dt['id']));?> Soal</td>
     <td>
     <a href="#"><i class="btn btn-primary fa fa-plus-square-o add_data" title="Tambah Data Soal" id="<?php echo encrypt_decrypt('encrypt', $dt['id']);?>"></i></a>
     </td>
