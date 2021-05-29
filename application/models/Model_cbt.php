@@ -78,4 +78,13 @@ class Model_cbt extends CI_Model {
                 ->where("a.id_prodi=b.id_ps")
                 ->where("a.id_matakuliah=c.id_matakuliah")->get()->result_array();
     }
+    function get_soal_per_prodi($id_prodi)
+    {
+        return $this->db->select("a.id, a.kode_soal, b.nama_matakuliah")
+                ->from("cbt_bank_soal_head a")
+                ->from("5_akademik_matakuliah b")
+                ->where("a.id_matakuliah=b.id_matakuliah")
+                ->where("a.id_prodi", $id_prodi)
+                ->get()->result_array();
+    }
 }

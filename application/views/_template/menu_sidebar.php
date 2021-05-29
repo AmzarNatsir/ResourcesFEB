@@ -136,7 +136,7 @@
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>cbt/buat_soal"><i class="fa fa-circle-o"></i> Pembuatan Soal</a></li>
             <li><a href="<?php echo base_url();?>cbt/bank_soal"><i class="fa fa-circle-o"></i> Bank Soal</a></li>
-            <!--<li><a href="<?php echo base_url();?>cbt/hasil_ujian"><i class="fa fa-circle-o"></i> Hasil Ujian</a></li>-->
+            <li><a href="<?php echo base_url();?>cbt/jadwal_ujian"><i class="fa fa-circle-o"></i> Jadwal Ujian</a></li>
           </ul>
         </li>
       </ul>

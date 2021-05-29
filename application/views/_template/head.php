@@ -45,6 +45,7 @@
   <script src="<?php echo base_url();?>assets/dist/mask/jquery.mask.js"></script>
   <script type="text/javascript" src="<?php echo base_url();?>assets/dist/js/moment.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url();?>assets/dist/js/daterangepicker.js"></script>
+  <script src="<?php echo base_url();?>assets/dist/mask/jquery.mask.js"></script>
   
    
   <!--Form Validatin Script

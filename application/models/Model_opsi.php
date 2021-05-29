@@ -49,7 +49,7 @@ class Model_opsi extends CI_Model
 	}
 	function get_master_thn_akademik()
 	{
-		$sql_str = $this->db->query("Select * from umum_thn_akademik order by id_thn_akademik");
+		$sql_str = $this->db->query("Select * from umum_thn_akademik where aktif_non=1 order by id_thn_akademik desc");
 		return $sql_str->result_array();
 	}
 	function get_master_mandiri_tim()

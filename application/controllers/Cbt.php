@@ -638,4 +638,43 @@ class Cbt extends CI_Controller
 			$this->load->view('proses/cbt/bank_soal/detail_soal', $data);
 		}
 	}
+	//jadwal ujian
+	public function jadwal_ujian()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['mst_prodi'] = $this->model_opsi->get_master_prodi();
+		$data['head_soal'] = $this->model_cbt->get_all_head_soal();
+		$data['mst_ta'] = $this->model_opsi->get_master_thn_akademik();
+		$data['kode_ujian'] = struuid(false);
+		$this->load->view('proses/cbt/jadwal_ujian/index', $data);
+	}
+	public function tampilkan_soal_per_prodi_jadwal()
+	{
+		$id_prodi = $this->input->post("id_prodi");
+		$res_soal = $this->model_cbt->get_soal_per_prodi($id_prodi);
+		$html_v = "<option></option>";
+		foreach($res_soal as $list_soal) {
+			$html_v .= "<option value=".$list_soal['id'].">".$list_soal['kode_soal']." | ".$list_soal['nama_matakuliah']."</option>";
+		}
+		echo $html_v;
+	}
+	public function tampilkan_team_penyusun_soal_jadwal()
+	{
+		$id_soal = $this->input->post("id_soal");
+		$res_data = $this->model_cbt->get_head_soal($id_soal);
+		$arr_dosen = explode(",", $res_data->team_dosen);
+		for ($i=0; $i < count($arr_dosen); $i++) 
+		{ 
+			$all_dosen[] = $this->model_dosen->get_profil_dosen($arr_dosen[$i])->nama_dosen;
+		}
+		$nom=1;
+		$team="";
+		foreach ($all_dosen as $key => $value) {
+			$team .= $nom.". ".$value."<br>";
+			$nom++;
+		}
+		unset($all_dosen);
+		echo $team;
+	}
 }
