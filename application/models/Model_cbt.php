@@ -87,4 +87,24 @@ class Model_cbt extends CI_Model {
                 ->where("a.id_prodi", $id_prodi)
                 ->get()->result_array();
     }
+    //jadwal ujian
+    function insert_jadwal($data)
+    {
+        $this->db->insert("cbt_jadwal_ujian", $data);
+    }
+    function get_jadwal_ujian_all()
+    {
+        return $this->db->select("a.*, c.nama_tahun, d.nama_ps, e.nama_matakuliah")
+            ->from("cbt_jadwal_ujian a")
+            ->from("cbt_bank_soal_head b")
+            ->from("umum_thn_akademik c")
+            ->from("1_2_identitas_ps d")
+            ->from("5_akademik_matakuliah e")
+            ->where("a.id_soal=b.id")
+            ->where("a.id_ta=c.id_thn_akademik")
+            ->where("a.id_prodi=d.id_ps")
+            ->where("b.id_matakuliah=e.id_matakuliah")
+            ->order_by("a.tanggal_ujian", "desc")
+            ->get()->result_array();
+    }
 }

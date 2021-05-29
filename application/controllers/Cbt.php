@@ -647,6 +647,7 @@ class Cbt extends CI_Controller
 		$data['head_soal'] = $this->model_cbt->get_all_head_soal();
 		$data['mst_ta'] = $this->model_opsi->get_master_thn_akademik();
 		$data['kode_ujian'] = struuid(false);
+		$data['list_jadwal'] = $this->model_cbt->get_jadwal_ujian_all();
 		$this->load->view('proses/cbt/jadwal_ujian/index', $data);
 	}
 	public function tampilkan_soal_per_prodi_jadwal()
@@ -676,5 +677,28 @@ class Cbt extends CI_Controller
 		}
 		unset($all_dosen);
 		echo $team;
+	}
+	public function simpan_jadwal()
+	{
+		$data['kode_ujian'] = $this->input->post("inp_kode_ujian");
+		$data['id_ta'] = $this->input->post("pil_ta");
+		$data['id_prodi'] = $this->input->post("pil_ps");
+		$data['id_soal'] = $this->input->post("pil_soal");
+		$arr_tgl = explode("/", $this->input->post('inp_tanggal'));
+		$data['tanggal_ujian'] =  $arr_tgl[2]."-".$arr_tgl[1]."-".$arr_tgl[0];
+		$data['jam_ujian'] = $this->input->post("inp_jam");
+		$data['lama_pengerjaan'] = $this->input->post("inp_lama_pengerjaan");
+		$data['range_a_1'] = $this->input->post("a_1");
+		$data['range_a_2'] = $this->input->post("a_2");
+		$data['range_b_1'] = $this->input->post("b_1");
+		$data['range_b_2'] = $this->input->post("b_2");
+		$data['range_c_1'] = $this->input->post("c_1");
+		$data['range_c_2'] = $this->input->post("c_2");
+		$data['range_d_1'] = $this->input->post("d_1");
+		$data['range_d_2'] = $this->input->post("d_2");
+		$data['status'] = 1; //jadwal aktif
+		$this->model_cbt->insert_jadwal($data);
+		$this->session->set_flashdata('info', "Jadwal Ujian berhasil disimpan");
+		redirect("cbt/jadwal_ujian");
 	}
 }
