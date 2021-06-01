@@ -15,15 +15,15 @@
       </div>
     <?php endif; ?>
     <div class="row">
-      <div class="col-md-12">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title">FORM PEMBUATAN JADWAL UJIAN</h3>
-            <hr>
-            <div class="row">
-              <div class="col-md-5">
-              <form action="<?php echo base_url();?>cbt/simpan_jadwal" method="post" onsubmit="return konfirm()">
-                <fieldset>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">FORM PEMBUATAN JADWAL UJIAN</h3>
+                <hr>
+                <form action="<?php echo base_url();?>cbt/simpan_jadwal" method="post" onsubmit="return konfirm()">
+                <div class="row">
+                <div class="col-md-8">
+                    <fieldset>
                     <div class="form-group row">
                         <label class="col-md-3 control-label" for="pil_ta">Tahun Akademik</label>
                         <div class="col-md-9">
@@ -83,93 +83,57 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group row">
-                        <label class="col-md-12 control-label"">Indikator Penilaian</label>
-                    </div>
-                    <table class="table" style="width: 50%;">
-                    <thead>
-                      <tr>
-                        <td rowspan="2" style="width: 20%; text-align: center">Nilai Huruf</td>
-                        <td colspan="2" style="text-align: center;">Range Nilai</td>
-                      </tr>
-                      <tr>
-                        <td style="width: 15%; text-align: center;">Batas Awal</td>
-                        <td style="width: 15%; text-align: center">Batal Akhir</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style="text-align: center;">A</td>
-                        <td><input type="text" class="form-control range_nilai" name="a_1" id="a_1" value="0" style="text-align: center" required></td>
-                        <td><input type="text" class="form-control range_nilai" name="a_2" id="a_2" value="0" style="text-align: center" required></td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: center;">B</td>
-                        <td><input type="text" class="form-control range_nilai" name="b_1" id="b_1" value="0" style="text-align: center" required></td>
-                        <td><input type="text" class="form-control range_nilai" name="b_2" id="b_2" value="0" style="text-align: center" required></td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: center;">C</td>
-                        <td><input type="text" class="form-control range_nilai" name="c_1" id="c_1" value="0" style="text-align: center" required></td>
-                        <td><input type="text" class="form-control range_nilai" name="c_2" id="c_2" value="0" style="text-align: center" required></td>
-                      </tr>
-                      <tr>
-                        <td style="text-align: center;">D</td>
-                        <td><input type="text" class="form-control range_nilai" name="d_1" id="d_1" value="0" style="text-align: center" required></td>
-                        <td><input type="text" class="form-control range_nilai" name="d_2" id="d_2" value="0" style="text-align: center" required></td>
-                      </tr>
-                    </tbody>
-                    </table>
-                    <hr>
                       <div class="form-group" align="center">
                           <div class="col-sm-12">
                           <button type="submit" class="btn btn-danger">Simpan Jadwal</button>
                           </div>
                       </div>
-                </fieldset>
-              </form>
-              </div>
-              <div class="col-md-7">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">DAFTAR JADWAL UJIAN</h3>
+                    </fieldset>
                 </div>
-                <div class="box-body table-responsive">
-                <table class="table" style="width: 100%;">
-                <thead>
-                  <tr>
-                  <th>No</th>
-                  <th>Tanggal/Jam</th>
-                  <th>Prodi/TA</th>
-                  <th>Matakuliah</th>
-                  <th>Kode Ujian</th>
-                  <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php $nom=1; foreach($list_jadwal as $list) { ?>
-                  <tr>
-                  <td><?php echo $nom;?></td>
-                  <td><?php echo date_format(date_create($list['tanggal_ujian']), "d/m/Y")."<br>Jam : ".$list['jam_ujian']."<br>Durasi : ".$list['lama_pengerjaan'];?></td>
-                  <td><?php echo $list['nama_ps']."<br>TA. ".$list['nama_tahun'];?></td>
-                  <td><?php echo $list['nama_matakuliah'];?></td>
-                  <td><?php echo $list['kode_ujian'];?></td>
-                  <td><a href="<?php echo base_url();?>cbt/jadwal_ujian_detail/<?php echo encrypt_decrypt('encrypt', $list['id']);?>"><i class="btn btn-primary fa fa-eye" title="Detail Jadwal Ujian"></i></a></td>
-                  </tr>
-                  <?php
-                  $nom++;
-                } ?>
-                <tr>
-                <td></td>
-                </tr>
-                </tbody>
-                </table>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label class="col-md-12 control-label"">Indikator Penilaian</label>
+                    </div>
+                    <table class="table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                        <td rowspan="2" style="width: 20%; text-align: center">Nilai Huruf</td>
+                        <td colspan="2" style="text-align: center;">Range Nilai</td>
+                        </tr>
+                        <tr>
+                        <td style="width: 40%; text-align: center;">Batas Awal</td>
+                        <td style="width: 40%; text-align: center">Batal Akhir</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td style="text-align: center;">A</td>
+                        <td><input type="text" class="form-control range_nilai" name="a_1" id="a_1" value="0" style="text-align: center" required></td>
+                        <td><input type="text" class="form-control range_nilai" name="a_2" id="a_2" value="0" style="text-align: center" required></td>
+                        </tr>
+                        <tr>
+                        <td style="text-align: center;">B</td>
+                        <td><input type="text" class="form-control range_nilai" name="b_1" id="b_1" value="0" style="text-align: center" required></td>
+                        <td><input type="text" class="form-control range_nilai" name="b_2" id="b_2" value="0" style="text-align: center" required></td>
+                        </tr>
+                        <tr>
+                        <td style="text-align: center;">C</td>
+                        <td><input type="text" class="form-control range_nilai" name="c_1" id="c_1" value="0" style="text-align: center" required></td>
+                        <td><input type="text" class="form-control range_nilai" name="c_2" id="c_2" value="0" style="text-align: center" required></td>
+                        </tr>
+                        <tr>
+                        <td style="text-align: center;">D</td>
+                        <td><input type="text" class="form-control range_nilai" name="d_1" id="d_1" value="0" style="text-align: center" required></td>
+                        <td><input type="text" class="form-control range_nilai" name="d_2" id="d_2" value="0" style="text-align: center" required></td>
+                        </tr>
+                    </tbody>
+                    </table>           
                 </div>
-              </div>
+                </form>
+                </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
   </section>
 </div>

@@ -639,7 +639,7 @@ class Cbt extends CI_Controller
 		}
 	}
 	//jadwal ujian
-	public function jadwal_ujian()
+	public function buat_jadwal_baru()
 	{
 		$this->Model_security->get_security();
 		$this->_init();
@@ -647,8 +647,7 @@ class Cbt extends CI_Controller
 		$data['head_soal'] = $this->model_cbt->get_all_head_soal();
 		$data['mst_ta'] = $this->model_opsi->get_master_thn_akademik();
 		$data['kode_ujian'] = struuid(false);
-		$data['list_jadwal'] = $this->model_cbt->get_jadwal_ujian_all();
-		$this->load->view('proses/cbt/jadwal_ujian/index', $data);
+		$this->load->view('proses/cbt/jadwal_ujian/baru/index', $data);
 	}
 	public function tampilkan_soal_per_prodi_jadwal()
 	{
@@ -699,6 +698,21 @@ class Cbt extends CI_Controller
 		$data['status'] = 1; //jadwal aktif
 		$this->model_cbt->insert_jadwal($data);
 		$this->session->set_flashdata('info', "Jadwal Ujian berhasil disimpan");
-		redirect("cbt/jadwal_ujian");
+		redirect("cbt/buat_jadwal_baru");
+	}
+	public function jadwal_ujian()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$data['list_jadwal'] = $this->model_cbt->get_jadwal_ujian_all();
+		$this->load->view('proses/cbt/jadwal_ujian/daftar/index', $data);
+	}
+	public function jadwal_ujian_detail()
+	{
+		$this->Model_security->get_security();
+		$this->_init();
+		$id_h = encrypt_decrypt('decrypt', $this->uri->segment(3));
+		$data['head_jadwal'] = $this->model_cbt->get_head_jadwal_ujian($id_h);
+		$this->load->view('proses/cbt/jadwal_ujian/daftar/detail', $data);
 	}
 }
