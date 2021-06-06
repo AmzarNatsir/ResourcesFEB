@@ -68,10 +68,10 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label-left">INDIKATOR PENILAI</label>
-                    <div class="col-sm-10">
-                        <table style="width: 50%; border-collapse:collapse" border="1">
+                    <div class="col-sm-8">
+                        <table style="width: 45%; border-collapse:collapse" border="1">
                             <tr>
-                            <td rowspan="2" style="width: 20%; text-align: center">Nilai Huruf</td>
+                            <td rowspan="2" style="width: 15%; text-align: center">Nilai Huruf</td>
                             <td colspan="2" style="text-align: center; height: 30px;">Range Nilai</td>
                             </tr>
                             <tr>
@@ -112,7 +112,7 @@
                 <div class="box-header">
                     <h3 class="box-title">PESERTA UJIAN</h3>
                     <div class="pull-right box-tools">
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus"></i> Tambah Peserta</button>
+                        <button type="button" class="btn btn-info btn-sm tbl_add_peserta" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus"></i> Tambah Peserta</button>
                     </div>
                     <hr>
                     <div class="row">
@@ -123,10 +123,22 @@
                             <tr>
                             <th style="width: 5%;">No</th>
                             <th style="width: 15%;">NIM</th>
-                            <th style="width: 70%;">Nama Mahasiswa</th>
-                            <th style="width: 10%;">Nilai</th>
+                            <th style="width: 50%;">Nama Mahasiswa</th>
+                            <th style="width: 10%; text-align: center;">Jam Mulai</th>
+                            <th style="width: 19%; text-align: center">Jam Selesai</th>
+                            <th style="width: 10%; text-align: center">Nilai</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
                         </table>
                         </div>
                     </div>
@@ -137,3 +149,37 @@
     </div>
   </section>
 </div>
+<!-- Add Kegiatan -->
+<div class="modal fade" id="modal-add" data-backdrop="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Tambah Peserta Ujian</h4>
+      </div>
+      <div id="frm_modal_peserta"></div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function()
+    {
+        $(".tbl_add_peserta").on("click", function()
+        {
+           // $("#frm_modal_peserta").load("<?php echo base_url();?>cbt/tambah_peserta/"+obj);
+          var id_jadwal = "<?php echo $head_jadwal->id;?>";
+            $.ajax({
+              type : "POST",
+              url : "<?php echo base_url();?>cbt/tambah_peserta",
+              data : {id_jadwal:id_jadwal},
+              success : function(respond) {
+                $("#frm_modal_peserta").html(respond);
+              }
+            });
+            //console.log(obj);   
+
+            //alert(obj.profil[0].id_ta);
+        });
+    });
+</script>

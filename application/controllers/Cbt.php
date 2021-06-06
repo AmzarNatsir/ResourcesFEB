@@ -715,4 +715,12 @@ class Cbt extends CI_Controller
 		$data['head_jadwal'] = $this->model_cbt->get_head_jadwal_ujian($id_h);
 		$this->load->view('proses/cbt/jadwal_ujian/daftar/detail', $data);
 	}
+	public function tambah_peserta()
+	{
+		$id_jadwal = $this->input->post("id_jadwal");
+		$res_head = $this->model_cbt->get_head_jadwal_ujian($id_jadwal);
+		$data['head_jadwal'] = $res_head;
+		$data['list_mahasiswa'] = $this->model_akademik->get_mahasiswa_filter($res_head->id_ta, $res_head->id_prodi);
+		$this->load->view("proses/cbt/jadwal_ujian/peserta/add_peserta", $data);
+	}
 }
