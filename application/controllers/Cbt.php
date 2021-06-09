@@ -713,6 +713,7 @@ class Cbt extends CI_Controller
 		$this->_init();
 		$id_h = encrypt_decrypt('decrypt', $this->uri->segment(3));
 		$data['head_jadwal'] = $this->model_cbt->get_head_jadwal_ujian($id_h);
+		$data['list_peserta'] = $this->model_cbt->get_peserta($id_h);
 		$this->load->view('proses/cbt/jadwal_ujian/daftar/detail', $data);
 	}
 	public function tambah_peserta()
@@ -721,6 +722,27 @@ class Cbt extends CI_Controller
 		$res_head = $this->model_cbt->get_head_jadwal_ujian($id_jadwal);
 		$data['head_jadwal'] = $res_head;
 		$data['list_mahasiswa'] = $this->model_akademik->get_mahasiswa_filter($res_head->id_ta, $res_head->id_prodi);
+		$data['list_peserta'] = $this->model_cbt->get_peserta($id_jadwal);
 		$this->load->view("proses/cbt/jadwal_ujian/peserta/add_peserta", $data);
+	}
+	public function simpan_peserta()
+	{
+		$id_soal = $this->input->post("id_soal");
+		$kd_soal = $this->input->post("kd_soal");
+		if(!empty($this->input->post('mahasiswa_id')))
+		{
+			$brs = count($this->input->post('mahasiswa_id'));
+			for($i=0; $i<$brs; $i++)
+			{
+				if($this->model_cbt->cek_data_peserta($this->input->post('mahasiswa_id')[$i], $id_soal)==0) {
+					$data['id_soal'] = $id_soal;
+					$data['kd_soal'] = $kd_soal;
+					$data['id_mahasiswa'] = $this->input->post('mahasiswa_id')[$i];
+					$this->model_cbt->insert_peserta($data);
+				}
+			}
+		}
+		$this->session->set_flashdata('info', "Data peserta ujian berhasil disimpan");
+		redirect("cbt/jadwal_ujian_detail/".encrypt_decrypt('encrypt', $id_soal));
 	}
 }

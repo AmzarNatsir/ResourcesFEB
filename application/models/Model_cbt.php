@@ -122,4 +122,28 @@ class Model_cbt extends CI_Model {
             ->where("a.id", $id)
             ->get()->row();
     }
+    //peserta
+    function insert_peserta($data)
+    {
+        $this->db->insert("cbt_peserta", $data);
+    }
+    function get_peserta($idhead)
+    {
+        return $this->db->select("a.*, b.nim, b.nama_mahasiswa")
+                ->from("cbt_peserta a")
+                ->from("3_1_biodata_mahasiswa b")
+                ->where("a.id_mahasiswa=b.id_mahasiswa")
+                ->get()->result_array();
+    }
+    function cek_data_peserta($id_peserta, $id_h)
+    {
+        $res = $this->db->where("id", $id_h)->where("id_mahasiswa", $id_peserta)->get("cbt_peserta")->row();
+        if(empty($res->id))
+        {
+            $hasil_cek=0;
+        } else {
+            $hasil_cek=1;
+        }
+        return $hasil_cek;
+    }
 }

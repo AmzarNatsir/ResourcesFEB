@@ -7,6 +7,13 @@
     </ol>
   </section>
   <section class="content">
+    <?php if ($this->session->flashdata('info')): ?>
+      <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-info"></i> Konfirmasi !</h4>
+        <?php echo $this->session->flashdata('info'); ?>
+      </div>
+    <?php endif; ?>
     <div class="row">
       <div class="col-md-12">
         <div class="box">
@@ -130,14 +137,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                          <?php
+                          $nom=1;
+                          if(count($list_peserta) <=0)
+                          {
+                            echo "<tr><td colspan='6'>Peserta Ujian Masih Kosong</td></tr>";
+                          } else {
+                            foreach($list_peserta as $psrt)
+                            {
+                              ?>
+                              <tr>
+                                <td><?= $nom ?></td>
+                                <td><?= $psrt['nim'] ?></td>
+                                <td><?= $psrt['nama_mahasiswa'] ?></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                              </tr>
+                              <?php
+                              $nom++;
+                            }
+                          }?>
                         </tbody>
                         </table>
                         </div>
@@ -165,21 +185,22 @@
 <script>
     $(document).ready(function()
     {
-        $(".tbl_add_peserta").on("click", function()
-        {
-           // $("#frm_modal_peserta").load("<?php echo base_url();?>cbt/tambah_peserta/"+obj);
-          var id_jadwal = "<?php echo $head_jadwal->id;?>";
-            $.ajax({
-              type : "POST",
-              url : "<?php echo base_url();?>cbt/tambah_peserta",
-              data : {id_jadwal:id_jadwal},
-              success : function(respond) {
-                $("#frm_modal_peserta").html(respond);
-              }
-            });
-            //console.log(obj);   
+      window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+      $(".tbl_add_peserta").on("click", function()
+      {
+          // $("#frm_modal_peserta").load("<?php echo base_url();?>cbt/tambah_peserta/"+obj);
+        var id_jadwal = "<?php echo $head_jadwal->id;?>";
+          $.ajax({
+            type : "POST",
+            url : "<?php echo base_url();?>cbt/tambah_peserta",
+            data : {id_jadwal:id_jadwal},
+            success : function(respond) {
+              $("#frm_modal_peserta").html(respond);
+            }
+          });
+          //console.log(obj);   
 
-            //alert(obj.profil[0].id_ta);
-        });
+          //alert(obj.profil[0].id_ta);
+      });
     });
 </script>
