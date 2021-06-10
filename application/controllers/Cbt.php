@@ -745,4 +745,12 @@ class Cbt extends CI_Controller
 		$this->session->set_flashdata('info', "Data peserta ujian berhasil disimpan");
 		redirect("cbt/jadwal_ujian_detail/".encrypt_decrypt('encrypt', $id_soal));
 	}
+	public function hapus_peserta()
+	{
+		$id_peserta = $this->uri->segment(3);
+		$id_ujian = encrypt_decrypt('encrypt', $this->uri->segment(4));
+		$this->model_cbt->delete_peserta_ujian($id_peserta);
+		$this->session->set_flashdata('info', "Data peserta ujian berhasil dihapus");
+		redirect("cbt/jadwal_ujian_detail/".$id_ujian);
+	}
 }

@@ -1,3 +1,7 @@
+<?php
+$date_skr = strtotime(date("Y-m-d"));
+$tgl_ujian = strtotime($head_jadwal->tanggal_ujian);
+?>
 <div class="content-wrapper">
   <section class="content-header">
     <h1>Computer Based Test (CBT) <small>Jadwal Ujian</small></h1>
@@ -118,9 +122,12 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">PESERTA UJIAN</h3>
+                    <?php
+                    if($tgl_ujian > $date_skr) { ?>
                     <div class="pull-right box-tools">
                         <button type="button" class="btn btn-info btn-sm tbl_add_peserta" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus"></i> Tambah Peserta</button>
                     </div>
+                    <?php } ?>
                     <hr>
                     <div class="row">
                     <div class="col-md-12">
@@ -134,6 +141,7 @@
                             <th style="width: 10%; text-align: center;">Jam Mulai</th>
                             <th style="width: 19%; text-align: center">Jam Selesai</th>
                             <th style="width: 10%; text-align: center">Nilai</th>
+                            <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,7 +149,7 @@
                           $nom=1;
                           if(count($list_peserta) <=0)
                           {
-                            echo "<tr><td colspan='6'>Peserta Ujian Masih Kosong</td></tr>";
+                            echo "<tr><td colspan='7'>Peserta Ujian Masih Kosong</td></tr>";
                           } else {
                             foreach($list_peserta as $psrt)
                             {
@@ -153,6 +161,12 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td>
+                                <?php
+                                if($tgl_ujian > $date_skr) { ?>
+                                  <a href="<?php echo base_url();?>cbt/hapus_peserta/<?php echo $psrt['id'];?>/<?php echo $head_jadwal->id;?>" title='Hapus peserta' onclick='return HapusPeserta()'><i class='fa fa-remove btn btn-danger'></i></a>
+                                <?php } ?>
+                                </td>
                               </tr>
                               <?php
                               $nom++;
@@ -203,4 +217,25 @@
           //alert(obj.profil[0].id_ta);
       });
     });
+    var HapusPeserta = function(el)
+    {
+      //var id_peserta = $(el).val();
+      var psn = confirm("Yakin data peserta akan dihapus ?");
+      if(psn==true)
+      {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function konfirm()
+    {
+      var psn = confirm("Yakin data peserta ujian akan disimpan ?");
+      if(psn==true)
+      {
+        return true;
+      } else {
+        return false;
+      }
+    } 
 </script>

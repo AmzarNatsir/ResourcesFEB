@@ -127,6 +127,10 @@ class Model_cbt extends CI_Model {
     {
         $this->db->insert("cbt_peserta", $data);
     }
+    function delete_peserta_ujian($id)
+    {
+        $this->db->where("id", $id)->delete("cbt_peserta");
+    }
     function get_peserta($idhead)
     {
         return $this->db->select("a.*, b.nim, b.nama_mahasiswa")

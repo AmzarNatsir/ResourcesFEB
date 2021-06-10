@@ -45,9 +45,9 @@
                     <td><?php echo $list['kode_ujian'];?></td>
                     <td>
                     <?php
-                    $date_skr = date("d/m/Y");
-                    $data_ujian = date_format(date_create($list['tanggal_ujian']), "d/m/Y");
-                    if($data_ujian < $date_skr) {
+                    $date_skr = strtotime(date("Y-m-d"));
+                    $tgl_ujian = strtotime($list['tanggal_ujian']);
+                    if($tgl_ujian < $date_skr) {
                       echo "<i class='fa fa-check btn btn-success'></i>";
                     } ?>
                     </td>
